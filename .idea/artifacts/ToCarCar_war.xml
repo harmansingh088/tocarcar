@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="ToCarCar:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>ToCarCar</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="ToCarCar-1.0-SNAPSHOT.war">
+      <element id="artifact" artifact-name="ToCarCar:war exploded" />
+    </root>
+  </artifact>
+</component>
