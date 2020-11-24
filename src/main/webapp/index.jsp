@@ -42,9 +42,10 @@
         <h2>Menu</h2>
         <ul>
             <li><a href="/" class="active">Home</a></li>
-            <li><a href="about.html">About Us</a></li>
-            <li><a href="contact.html">Contact Us</a></li>
-            <li><a href="/registration">SignUp</a></li>
+            <li><a href="about.jsp">About Us</a></li>
+            <li><a href="contact.jsp">Contact Us</a></li>
+            <li><a href="/registration">Sign Up</a></li>
+            <li><a href="/login">Log In</a></li>
         </ul>
     </nav>
 
