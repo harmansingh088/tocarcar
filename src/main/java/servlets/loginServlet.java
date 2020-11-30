@@ -1,6 +1,8 @@
 package servlets;
 
+import models.User;
 import services.DatabaseConnection;
+import services.LoginUser;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -35,7 +37,14 @@ public class loginServlet extends HttpServlet {
             rs = preparedStmt.executeQuery();
 
             while (rs.next()) {
-                System.out.println(rs.getString(1));
+                User loggedInUser = new User(rs.getString("firstName"),
+                        rs.getString("lastName"),
+                        rs.getString("email"),
+                        rs.getString("password"),
+                        rs.getString("phoneNumber"),
+                        rs.getInt("age"));
+                loggedInUser.setUserId(rs.getInt("userId"));
+                LoginUser.setLoginUser(loggedInUser);
                 getServletContext().getRequestDispatcher("/postAd").forward(request, response);
             }
 

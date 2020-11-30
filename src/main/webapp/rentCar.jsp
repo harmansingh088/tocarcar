@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <title>Phantom by HTML5 UP</title>
@@ -149,60 +150,6 @@
     <!-- Footer -->
     <footer id="footer">
         <div class="inner">
-            <section>
-                <h2>Book now</h2>
-                <form method="post" action="#">
-                    <div class="fields">
-                        <div class="field half">
-                            <input type="text" name="location" id="location" placeholder="Location" />
-                        </div>
-
-                        <div class="field half">
-                            <select name="vehicle-type" id="vehicle-type">
-                                <option value="">Select Vehicle Type</option>
-                                <option value="1">Large: Premium</option>
-                                <option value="2">Large: Station wagon</option>
-                                <option value="3">Medium: Low emission</option>
-                                <option value="4">Small: Economy</option>
-                                <option value="5">Small: Mini</option>
-                                <option value="6">Small: Mini Low emission</option>
-                            </select>
-                        </div>
-
-                        <div class="field half">
-                            <input type="text" name="date-from" id="date-from" placeholder="Date from" />
-                        </div>
-
-                        <div class="field half">
-                            <input type="text" name="date-to" id="date-to" placeholder="Date to" />
-                        </div>
-
-                        <div class="field">
-                            <input type="text" name="name" id="name" placeholder="Name" />
-                        </div>
-
-                        <div class="field half">
-                            <input type="text" name="email" id="email" placeholder="Email" />
-                        </div>
-
-                        <div class="field half">
-                            <input type="text" name="phone" id="phone" placeholder="Phone" />
-                        </div>
-
-                        <div class="field">
-                            <textarea name="message" id="message" rows="3" placeholder="Comment"></textarea>
-                        </div>
-
-                        <div class="field text-right">
-                            <label>&nbsp;</label>
-
-                            <ul class="actions">
-                                <li><input type="submit" value="Send" class="primary" /></li>
-                            </ul>
-                        </div>
-                    </div>
-                </form>
-            </section>
             <section>
                 <h2>Contact Info</h2>
 

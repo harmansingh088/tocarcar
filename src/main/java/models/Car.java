@@ -9,8 +9,7 @@ public class Car {
     private double price;
     private int userId;
 
-    public Car(int carId, String company, String name, int year, String description, double price, int userId) {
-        this.carId = carId;
+    public Car(String company, String name, int year, String description, double price, int userId) {
         this.company = company;
         this.name = name;
         this.year = year;
