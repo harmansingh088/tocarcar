@@ -24,7 +24,7 @@
 
             <!-- Logo -->
             <a href="index.jsp" class="logo">
-                <span class="fa fa-car"></span> <span class="title">CAR RENTAL WEBSITE BY VEVS</span>
+                <span class="fa fa-car"></span> <span class="title">To Car Car</span>
             </a>
 
             <!-- Nav -->

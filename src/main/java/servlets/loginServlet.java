@@ -1,6 +1,6 @@
 package servlets;
 
-import database.DatabaseConnection;
+import services.DatabaseConnection;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -36,6 +36,7 @@ public class loginServlet extends HttpServlet {
 
             while (rs.next()) {
                 System.out.println(rs.getString(1));
+                getServletContext().getRequestDispatcher("/postAd").forward(request, response);
             }
 
             rs.close();

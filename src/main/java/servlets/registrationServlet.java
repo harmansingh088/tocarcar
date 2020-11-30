@@ -11,13 +11,11 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 
-import database.DatabaseConnection;
+import services.DatabaseConnection;
 
 @WebServlet(name = "registrationServlet", urlPatterns = "/registration")
 public class registrationServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        System.out.println("POST method started");
-
         String firstName = request.getParameter("firstName");
         String lastName = request.getParameter("lastName");
         String email = request.getParameter("email");
