@@ -62,10 +62,10 @@
 
             <section>
                 <h2>Post now</h2>
-                <form method="post" action="#">
+                <form method="POST" action="/addCar">
                     <div class="fields">
                         <div class="field">
-                            <select name="comapny" id="company">
+                            <select name="company" id="company">
 
                                 <option value="">Select Company</option>
                                 <c:forEach items="${requestScope.companyNames}" var="company">
@@ -79,7 +79,11 @@
                         </div>
 
                         <div class="field">
-                            <input type="text" name="year" id="year" placeholder="Year" />
+                            <input type="text" name="colour" id="colour" placeholder="Colour" />
+                        </div>
+
+                        <div class="field">
+                            <input type="number" name="year" id="year" placeholder="Year" />
                         </div>
 
                         <div class="field">

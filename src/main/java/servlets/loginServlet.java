@@ -5,6 +5,7 @@ import services.DatabaseConnection;
 import services.LoginUser;
 
 import javax.servlet.ServletException;
+import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -13,12 +14,15 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 @WebServlet(name = "loginServlet", urlPatterns = "/login")
 public class loginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
+
+        User loggedInUser = null;
 
         try{
             Connection conn = DatabaseConnection.getDatabaseConnection();
@@ -36,8 +40,8 @@ public class loginServlet extends HttpServlet {
             ResultSet rs;
             rs = preparedStmt.executeQuery();
 
-            while (rs.next()) {
-                User loggedInUser = new User(rs.getString("firstName"),
+            if (rs.next()) {
+                loggedInUser = new User(rs.getString("firstName"),
                         rs.getString("lastName"),
                         rs.getString("email"),
                         rs.getString("password"),
@@ -45,15 +49,19 @@ public class loginServlet extends HttpServlet {
                         rs.getInt("age"));
                 loggedInUser.setUserId(rs.getInt("userId"));
                 LoginUser.setLoginUser(loggedInUser);
-                getServletContext().getRequestDispatcher("/postAd").forward(request, response);
             }
 
             rs.close();
 
             conn.close();
+
         }
         catch (Exception e){
+            System.out.println(e.getLocalizedMessage());
+        }
 
+        if(loggedInUser != null){
+            response.sendRedirect("/addCar");
         }
     }
 

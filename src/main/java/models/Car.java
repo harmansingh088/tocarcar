@@ -4,14 +4,16 @@ public class Car {
     private int carId;
     private String company;
     private String name;
+    private String colour;
     private int year;
     private String description;
     private double price;
     private int userId;
 
-    public Car(String company, String name, int year, String description, double price, int userId) {
+    public Car(String company, String name, String colour, int year, String description, double price, int userId) {
         this.company = company;
         this.name = name;
+        this.colour = colour;
         this.year = year;
         this.description = description;
         this.price = price;
@@ -40,6 +42,14 @@ public class Car {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getColour() {
+        return colour;
+    }
+
+    public void setColour(String colour) {
+        this.colour = colour;
     }
 
     public int getYear() {
