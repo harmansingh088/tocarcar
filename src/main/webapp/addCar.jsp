@@ -62,7 +62,7 @@
 
             <section>
                 <h2>Post now</h2>
-                <form method="POST" action="/addCar">
+                <form method="POST" action="/addCar" enctype="multipart/form-data">
                     <div class="fields">
                         <div class="field">
                             <select name="company" id="company">

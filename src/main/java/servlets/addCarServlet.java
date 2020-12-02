@@ -10,10 +10,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.io.InputStream;
+import java.sql.*;
 import java.util.ArrayList;
 
 @WebServlet(name = "addCarServlet", urlPatterns = "/addCar")
@@ -37,7 +39,6 @@ public class addCarServlet extends HttpServlet {
         System.out.println("Desc" + newCar.getDescription());
         System.out.println("Price" + newCar.getPrice());
 
-
         try{
             Connection conn = DatabaseConnection.getDatabaseConnection();
 
@@ -46,7 +47,7 @@ public class addCarServlet extends HttpServlet {
                     + " values (?, ?, ?, ?, ?, ?, ?)";
 
             // create the mysql insert preparedstatement
-            PreparedStatement preparedStmt = conn.prepareStatement(query);
+            PreparedStatement preparedStmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             preparedStmt.setString (1, newCar.getCompany());
             preparedStmt.setString (2, newCar.getName());
             preparedStmt.setString (3, newCar.getColour());
@@ -57,11 +58,43 @@ public class addCarServlet extends HttpServlet {
 
             // execute the preparedstatement
             //preparedStmt.RETURN_GENERATED_KEYS;
-            preparedStmt.execute();
+            int affectedRows = preparedStmt.executeUpdate();
 
-            //ResultSet generatedCarId = preparedStmt.getGeneratedKeys();
+            if (affectedRows == 0) {
+                throw new SQLException("Creating user failed, no rows affected.");
+            }
 
-            //System.out.println("Generated car id: " + generatedCarId);
+            try (ResultSet generatedKeys = preparedStmt.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    int carId = generatedKeys.getInt(1);
+
+                    InputStream inputStream = null;
+                    Part filePart = request.getPart("photos");
+
+                    if (filePart != null) {
+
+                        System.out.println(filePart.getName());
+                        System.out.println(filePart.getSize());
+                        System.out.println(filePart.getContentType());
+
+                        inputStream = filePart.getInputStream();
+
+                        String queryPhotos = " insert into carPhoto (photo, carId)"+ " values (?, ?)";
+
+                        PreparedStatement preparedStmtPhotos = conn.prepareStatement(queryPhotos, Statement.RETURN_GENERATED_KEYS);
+
+                        if (inputStream != null) {
+                            preparedStmtPhotos.setBlob(1, inputStream);
+                        }
+                        preparedStmtPhotos.setInt (2, carId);
+                        preparedStmtPhotos.executeUpdate();
+                    }
+
+                }
+                else {
+                    throw new SQLException("Creating user failed, no ID obtained.");
+                }
+            }
 
             conn.close();
         }
