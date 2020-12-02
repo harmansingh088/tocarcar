@@ -6,6 +6,7 @@ import services.DatabaseConnection;
 import services.LoginUser;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -18,10 +19,12 @@ import java.io.InputStream;
 import java.sql.*;
 import java.util.ArrayList;
 
+@MultipartConfig
 @WebServlet(name = "addCarServlet", urlPatterns = "/addCar")
 public class addCarServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
         String company = request.getParameter("company");
         String name = request.getParameter("name");
         String colour = request.getParameter("colour");
