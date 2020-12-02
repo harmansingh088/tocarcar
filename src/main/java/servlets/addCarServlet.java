@@ -18,6 +18,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @MultipartConfig
 @WebServlet(name = "addCarServlet", urlPatterns = "/addCar")
@@ -72,25 +74,26 @@ public class addCarServlet extends HttpServlet {
                     int carId = generatedKeys.getInt(1);
 
                     InputStream inputStream = null;
-                    Part filePart = request.getPart("photos");
+                    List<Part> photos = request.getParts().stream().filter(part -> "photos".equals(part.getName())).collect(Collectors.toList());;
 
-                    if (filePart != null) {
-
-                        System.out.println(filePart.getName());
-                        System.out.println(filePart.getSize());
-                        System.out.println(filePart.getContentType());
-
-                        inputStream = filePart.getInputStream();
-
+                    if (photos != null && photos.size() > 0) {
+                        System.out.println("Size of photos list " + photos.size());
                         String queryPhotos = " insert into carPhoto (photo, carId)"+ " values (?, ?)";
 
                         PreparedStatement preparedStmtPhotos = conn.prepareStatement(queryPhotos, Statement.RETURN_GENERATED_KEYS);
 
-                        if (inputStream != null) {
-                            preparedStmtPhotos.setBlob(1, inputStream);
+                        for(int i = 0; i < photos.size(); i++){
+                            Part filePart = photos.get(i);
+                            inputStream = filePart.getInputStream();
+                            System.out.println("inputStream " + inputStream);
+                            if (inputStream != null) {
+                                preparedStmtPhotos.setBlob(1, inputStream);
+                            }
+                            preparedStmtPhotos.setInt (2, carId);
+                            preparedStmtPhotos.addBatch();
                         }
-                        preparedStmtPhotos.setInt (2, carId);
-                        preparedStmtPhotos.executeUpdate();
+
+                        preparedStmtPhotos.executeBatch();
                     }
 
                 }
