@@ -37,13 +37,6 @@ public class addCarServlet extends HttpServlet {
 
         Car newCar = new Car(company, name, colour, year, description, price, userId);
 
-        System.out.println("Company" + newCar.getCompany());
-        System.out.println("name" + newCar.getName());
-        System.out.println("Colour" + newCar.getColour());
-        System.out.println("Year" + newCar.getYear());
-        System.out.println("Desc" + newCar.getDescription());
-        System.out.println("Price" + newCar.getPrice());
-
         try{
             Connection conn = DatabaseConnection.getDatabaseConnection();
 
@@ -77,7 +70,6 @@ public class addCarServlet extends HttpServlet {
                     List<Part> photos = request.getParts().stream().filter(part -> "photos".equals(part.getName())).collect(Collectors.toList());;
 
                     if (photos != null && photos.size() > 0) {
-                        System.out.println("Size of photos list " + photos.size());
                         String queryPhotos = " insert into carPhoto (photo, carId)"+ " values (?, ?)";
 
                         PreparedStatement preparedStmtPhotos = conn.prepareStatement(queryPhotos, Statement.RETURN_GENERATED_KEYS);
@@ -85,7 +77,6 @@ public class addCarServlet extends HttpServlet {
                         for(int i = 0; i < photos.size(); i++){
                             Part filePart = photos.get(i);
                             inputStream = filePart.getInputStream();
-                            System.out.println("inputStream " + inputStream);
                             if (inputStream != null) {
                                 preparedStmtPhotos.setBlob(1, inputStream);
                             }

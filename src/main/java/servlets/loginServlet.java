@@ -37,8 +37,7 @@ public class loginServlet extends HttpServlet {
 
 
             // execute the preparedstatement
-            ResultSet rs;
-            rs = preparedStmt.executeQuery();
+            ResultSet rs = preparedStmt.executeQuery();
 
             if (rs.next()) {
                 loggedInUser = new User(rs.getString("firstName"),
@@ -61,7 +60,11 @@ public class loginServlet extends HttpServlet {
         }
 
         if(loggedInUser != null){
-            response.sendRedirect("/addCar");
+            response.sendRedirect("/myCars");
+        }
+        else{
+            request.setAttribute("isLoginError", true);
+            getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
         }
     }
 

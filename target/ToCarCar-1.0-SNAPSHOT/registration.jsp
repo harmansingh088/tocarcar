@@ -8,11 +8,12 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Phantom by HTML5 UP</title>
+    <title>Registration</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="assets/css/main.css" />
     <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+    <link rel="stylesheet" href="assets/css/snackbar.css" />
 </head>
 <body class="is-preload">
 <!-- Wrapper -->
@@ -23,8 +24,8 @@
         <div class="inner">
 
             <!-- Logo -->
-            <a href="index.jsp" class="logo">
-                <span class="fa fa-car"></span> <span class="title">CAR RENTAL WEBSITE BY VEVS</span>
+            <a href="/" class="logo">
+                <span class="fa fa-car"></span> <span class="title">TO CAR CAR</span>
             </a>
 
             <!-- Nav -->
@@ -49,6 +50,8 @@
         </ul>
     </nav>
 
+    <div id="snackbar">Some text some message..</div>
+
     <!-- Main -->
     <div id="main">
         <div class="inner">
@@ -59,10 +62,8 @@
             </header>
 
             <section>
-                <form method="POST" action="/registration">
+                <form method="POST" action="/registration" onsubmit="return validation()">
                     <div class="container">
-
-                        <hr>
 
                         <label for="firstName"><b>First Name</b></label>
                         <input type="text" placeholder="First Name" name="firstName" id="firstName" required>
@@ -93,10 +94,11 @@
 
                         <hr>
 
-                        <p>By creating an account you agree to our <a href="#">Terms & Privacy</a>.</p>
                         <button type="submit" class="registerbtn">Register</button>
                     </div>
 
+                    <br>
+                    <br>
                     <div class="container signin">
                         <p>Already have an account? <a href="/login">Sign in</a>.</p>
                     </div>
@@ -108,11 +110,8 @@
     <!-- Footer -->
     <footer id="footer">
         <div class="inner">
-
-
             <ul class="copyright">
-                <li>&copy; 2018 <a href="#">Car Rental Company Ltd</a> | All rights reserved.</li>
-                <li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
+                <li>&copy; 2020 To Car Car | All rights reserved.</li>
             </ul>
         </div>
     </footer>
@@ -127,6 +126,21 @@
 <script src="assets/js/breakpoints.min.js"></script>
 <script src="assets/js/util.js"></script>
 <script src="assets/js/main.js"></script>
+
+<script>
+    function validation() {
+        if (document.getElementById("password").value != document.getElementById("pswRepeat").value) {
+            let snackbar = document.getElementById("snackbar");
+            snackbar.innerText = "Passwords do not match";
+            snackbar.style.backgroundColor = "#FAC42F"
+            snackbar.className = "show";
+            setTimeout(function(){
+                snackbar.className = snackbar.className.replace("show", "");
+            }, 3000);
+            return false;
+        }
+    }
+</script>
 
 </body>
 </html>

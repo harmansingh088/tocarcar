@@ -45,8 +45,9 @@
             <li><a href="/" class="active">Home</a></li>
             <li><a href="about.jsp">About Us</a></li>
             <li><a href="contact.jsp">Contact Us</a></li>
-            <li><a href="/registration">Sign Up</a></li>
-            <li><a href="/login">Log In</a></li>
+            <li><a href="/myCars">My Cars</a></li>
+            <li><a href="/addCar">Add Car</a></li>
+            <li><a href="/logout">Logout</a></li>
         </ul>
     </nav>
 

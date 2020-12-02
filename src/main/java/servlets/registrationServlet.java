@@ -8,10 +8,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
+import java.sql.*;
 
 import services.DatabaseConnection;
+import services.LoginUser;
 
 @WebServlet(name = "registrationServlet", urlPatterns = "/registration")
 public class registrationServlet extends HttpServlet {
@@ -37,7 +37,7 @@ public class registrationServlet extends HttpServlet {
                     + " values (?, ?, ?, ?, ?, ?, ?)";
 
             // create the mysql insert preparedstatement
-            PreparedStatement preparedStmt = conn.prepareStatement(query);
+            PreparedStatement preparedStmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             preparedStmt.setString (1, newUser.getFirstName());
             preparedStmt.setString (2, newUser.getLastName());
             preparedStmt.setString   (3, newUser.getEmail());
@@ -46,8 +46,24 @@ public class registrationServlet extends HttpServlet {
             preparedStmt.setString   (6, newUser.getPhoneNumber());
             preparedStmt.setInt    (7, newUser.getAge());
 
-            // execute the preparedstatement
-            preparedStmt.execute();
+            int affectedRows = preparedStmt.executeUpdate();
+
+            if (affectedRows == 0) {
+                throw new SQLException("Creating user failed, no rows affected.");
+            }
+            else{
+                try (ResultSet generatedKeys = preparedStmt.getGeneratedKeys()) {
+                    if (generatedKeys.next()) {
+                        int userId = generatedKeys.getInt(1);
+                        newUser.setUserId(userId);
+                        LoginUser.setLoginUser(newUser);
+                        response.sendRedirect("/myCars");
+                    }
+                }
+                catch(Exception e){
+
+                }
+            }
 
             conn.close();
         }

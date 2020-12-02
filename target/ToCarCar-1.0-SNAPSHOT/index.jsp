@@ -1,4 +1,5 @@
-<%--
+<%@ page import="models.User" %>
+<%@ page import="services.LoginUser" %><%--
   Created by IntelliJ IDEA.
   User: harman
   Date: 2020-11-16
@@ -8,7 +9,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Phantom by HTML5 UP</title>
+    <title>TOCARCAR</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="assets/css/main.css" />
@@ -23,8 +24,8 @@
         <div class="inner">
 
             <!-- Logo -->
-            <a href="index.jsp" class="logo">
-                <span class="fa fa-car"></span> <span class="title">To Car Car</span>
+            <a href="/" class="logo">
+                <span class="fa fa-car"></span> <span class="title">TO CAR CAR</span>
             </a>
 
             <!-- Nav -->
@@ -44,8 +45,19 @@
             <li><a href="/" class="active">Home</a></li>
             <li><a href="about.jsp">About Us</a></li>
             <li><a href="contact.jsp">Contact Us</a></li>
-            <li><a href="/registration">Sign Up</a></li>
-            <li><a href="/login">Log In</a></li>
+            <%
+                User user = LoginUser.getLoginUser();
+                if(user == null){
+                %><li><a href="/registration">Sign Up</a></li>
+                    <li><a href="/login">Log In</a></li> <%
+                }
+                else{
+                    %><li><a href="/myCars">My Cars</a></li>
+                    <li><a href="/addCar">Add Car</a></li>
+                     <li><a href="/logout">Logout</a></li> <%
+                }
+            %>
+
         </ul>
     </nav>
 
