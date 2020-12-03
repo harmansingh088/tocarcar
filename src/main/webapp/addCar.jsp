@@ -57,12 +57,11 @@
             <span class="image main"><a href="#inner" class="scrolly"><img src="images/banner.jpg" alt="" /></a></span>
 
             <header id="inner">
-                <h1>Post an ad for your car</h1>
+                <h1>Add car to your inventory</h1>
                 <p>Etiam quis viverra lorem, in semper lorem. Sed nisl arcu euismod sit amet nisi euismod sed cursus arcu elementum ipsum arcu vivamus quis venenatis orci lorem ipsum et magna feugiat veroeros aliquam. Lorem ipsum dolor sit amet nullam dolore.</p>
             </header>
 
             <section>
-                <h2>Post now</h2>
                 <form method="POST" action="/addCar" enctype="multipart/form-data">
                     <div class="fields">
                         <div class="field">

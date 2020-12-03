@@ -16,6 +16,10 @@ public class postAdServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        int carId = Integer.valueOf(request.getParameter("carId"));
+        System.out.println("carId: " + carId);
+
+
         getServletContext().getRequestDispatcher("/postAd.jsp").forward(request, response);
     }
 }

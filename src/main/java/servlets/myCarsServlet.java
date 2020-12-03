@@ -55,6 +55,8 @@ public class myCarsServlet extends HttpServlet {
                     userCars.add(newCar);
                 }
 
+                request.setAttribute("userCars", userCars);
+
                 rs.close();
 
                 conn.close();

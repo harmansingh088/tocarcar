@@ -1,4 +1,5 @@
-<%--
+<%@ page import="models.Car" %>
+<%@ page import="java.util.List" %><%--
   Created by IntelliJ IDEA.
   User: Harman.Malhotra
   Date: 12/1/2020
@@ -6,6 +7,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <title>Phantom by HTML5 UP</title>
@@ -56,22 +58,28 @@
                 <h1>Added Cars</h1>
                 <p>These are all your added cars.</p>
             </header>
-
-            <section class="tiles">
-                <ul class="tilesWrap">
-                    <li>
-                        <h2>01</h2>
-                        <h3>Title 1</h3>
-                        <p>
-                            Lorem Ipsum is simply dummy text of the printing and typesetting
-                            industry. Lorem Ipsum has been the industry's standard dummy text ever
-                            since the 1500s.
-                        </p>
-                        <button>Read more</button>
-                    </li>
-                </ul>
-            </section>
-
+            <table class="styled-table">
+                <thead>
+                <tr>
+                    <th>Company</th>
+                    <th>Name</th>
+                    <th>Year</th>
+                    <th>Price</th>
+                    <th>Post ad</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <c:forEach items="${requestScope.userCars}" var="car">
+                        <tr>
+                            <td>${car['company']}</td>
+                            <td>${car['name']}</td>
+                            <td>${car['year']}</td>
+                            <td>${car['price']}</td>
+                            <td><a href="/postAd?carId=${car['carId']}"> Post Ad</a></td>
+                        </tr>
+                    </c:forEach>
+                </tbody>
+            </table>
             <div class="container signin">
                 <p>Add more cars <a href="/addCar">Add Car</a>.</p>
             </div>

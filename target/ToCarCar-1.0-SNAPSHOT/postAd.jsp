@@ -61,35 +61,63 @@
                 <p>Etiam quis viverra lorem, in semper lorem. Sed nisl arcu euismod sit amet nisi euismod sed cursus arcu elementum ipsum arcu vivamus quis venenatis orci lorem ipsum et magna feugiat veroeros aliquam. Lorem ipsum dolor sit amet nullam dolore.</p>
             </header>
 
+            <section>
+                <h2></h2>
+                <form method="POST" action="/postAd" enctype="multipart/form-data">
+                    <div class="fields">
+                        <div class="field">
+                            <select name="company" id="company">
+
+                                <option value="">Select Company</option>
+                                <c:forEach items="${requestScope.companyNames}" var="company">
+                                    <option value="${company}">${company}</option>
+                                </c:forEach>
+                            </select>
+                        </div>
+
+                        <div class="field">
+                            <input type="text" name="name" id="name" placeholder="Name" />
+                        </div>
+
+                        <div class="field">
+                            <input type="text" name="colour" id="colour" placeholder="Colour" />
+                        </div>
+
+                        <div class="field">
+                            <input type="number" name="year" id="year" placeholder="Year" />
+                        </div>
+
+                        <div class="field">
+                            <textarea name="description" id="description" rows="3" placeholder="Description"></textarea>
+                        </div>
+
+                        <div class="field">
+                            <input type="currency" name="price" id="price" placeholder="Price" />
+                        </div>
+
+                        <div class="field">
+                            <input type="file" name="photos" id="photos" accept="image/x-png,image/gif,image/jpeg" multiple/>
+                        </div>
+
+                        <div class="field text-right">
+                            <label>&nbsp;</label>
+
+                            <ul class="actions">
+                                <li><input type="submit" value="Send" class="primary" /></li>
+                            </ul>
+                        </div>
+                    </div>
+                </form>
+            </section>
+
         </div>
     </div>
 
     <!-- Footer -->
     <footer id="footer">
         <div class="inner">
-            <section>
-                <h2>Contact Info</h2>
-
-                <ul class="alt">
-                    <li><span class="fa fa-envelope-o"></span> <a href="#">carrentalwebsite@untitled.tld</a></li>
-                    <li><span class="fa fa-phone"></span> (000) 000-0000 x12387 </li>
-                    <li><span class="fa fa-map-pin"></span> 1234 Somewhere Road #5432 Nashville, TN 00000 United States of America</li>
-                </ul>
-
-                <h2>Follow Us</h2>
-
-                <ul class="icons">
-                    <li><a href="#" class="icon style2 fa-twitter"><span class="label">Twitter</span></a></li>
-                    <li><a href="#" class="icon style2 fa-facebook"><span class="label">Facebook</span></a></li>
-                    <li><a href="#" class="icon style2 fa-instagram"><span class="label">Instagram</span></a></li>
-                    <li><a href="#" class="icon style2 fa-linkedin"><span class="label">LinkedIn</span></a></li>
-                    <li><a href="#" class="icon style2 fa-pinterest"><span class="label">Pinterest</span></a></li>
-                </ul>
-            </section>
-
             <ul class="copyright">
-                <li>&copy; 2018 <a href="#">Car Rental Company Ltd</a> | All rights reserved.</li>
-                <li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
+                <li>&copy; 2020 To Car Car | All rights reserved.</li>
             </ul>
         </div>
     </footer>
