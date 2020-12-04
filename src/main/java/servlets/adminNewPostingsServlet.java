@@ -3,9 +3,7 @@ package servlets;
 import models.Car;
 import models.CarPosting;
 import models.CarPostingWrapper;
-import models.User;
 import services.DatabaseConnection;
-import services.LoginUser;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -29,13 +27,15 @@ public class adminNewPostingsServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession(false);
-        User loggedInUser = LoginUser.getLoginUser();
-        if(session == null || loggedInUser == null || !loggedInUser.getUserType().equalsIgnoreCase("Admin")){
+        if(session == null){
+            getServletContext().getRequestDispatcher("/").forward(request, response);
+        }
+        String useridString = String.valueOf(session.getAttribute("loggedInUserId"));
+        String userType = String.valueOf(session.getAttribute("loggedInUserType"));
+        if(useridString == null || !userType.equalsIgnoreCase("Admin")){
             getServletContext().getRequestDispatcher("/").forward(request, response);
         }
         else{
-            int loggedInUserId = loggedInUser.getUserId();
-
             try{
                 Connection conn = DatabaseConnection.getDatabaseConnection();
 
@@ -61,7 +61,7 @@ public class adminNewPostingsServlet extends HttpServlet {
                             rs.getInt("cp.ownerId"),
                             rs.getString("cp.status")
                     );
-                    carPosting.setCarId(rs.getInt("cp.carId"));
+                    carPosting.setCarPostingId(rs.getInt("cp.carPostingId"));
 
                     Car newCar = new Car(
                             rs.getString("c.company"),

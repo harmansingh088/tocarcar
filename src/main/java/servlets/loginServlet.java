@@ -2,10 +2,8 @@ package servlets;
 
 import models.User;
 import services.DatabaseConnection;
-import services.LoginUser;
 
 import javax.servlet.ServletException;
-import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -15,7 +13,6 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 
 @WebServlet(name = "loginServlet", urlPatterns = "/login")
 public class loginServlet extends HttpServlet {
@@ -45,15 +42,18 @@ public class loginServlet extends HttpServlet {
                         rs.getString("firstName"),
                         rs.getString("lastName"),
                         rs.getString("email"),
-                        rs.getString("password"),
+                        "",
                         rs.getString("userType"),
                         rs.getString("phoneNumber"),
                         rs.getInt("age"));
                 loggedInUser.setUserId(rs.getInt("userId"));
-                LoginUser.setLoginUser(loggedInUser);
 
-                HttpSession session = request.getSession();
-                session.setAttribute("loggedInUserId", loggedInUser.getUserId());
+                HttpSession sessionOld = request.getSession();
+                sessionOld.invalidate();
+
+                HttpSession sessionNew = request.getSession();
+                sessionNew.setAttribute("loggedInUserId", loggedInUser.getUserId());
+                sessionNew.setAttribute("loggedInUserType", loggedInUser.getUserType());
             }
 
             rs.close();

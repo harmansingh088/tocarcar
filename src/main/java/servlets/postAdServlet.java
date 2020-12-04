@@ -2,9 +2,7 @@ package servlets;
 
 import models.Car;
 import models.CarPosting;
-import models.User;
 import services.DatabaseConnection;
-import services.LoginUser;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,13 +15,11 @@ import java.util.ArrayList;
 import java.util.Base64;
 import java.sql.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @WebServlet(name = "postAdServlet", urlPatterns = "/postAd")
 public class postAdServlet extends HttpServlet {
 
     static Car carSelected;
-    static  User loggedInUser;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         System.out.println("Car Name "+ carSelected.getName());
@@ -32,7 +28,13 @@ public class postAdServlet extends HttpServlet {
         String description = request.getParameter("description");
         double price = Double.parseDouble(request.getParameter("price"));
 
-        CarPosting carPosting = new CarPosting(postingDate, description, price, carSelected.getCarId(), loggedInUser.getUserId(), "Pending Approval");
+        HttpSession session = request.getSession(false);
+        if(session == null){
+            getServletContext().getRequestDispatcher("/").forward(request, response);
+        }
+        String useridString = String.valueOf(session.getAttribute("loggedInUserId"));
+        int loggedInUserId = Integer.valueOf(useridString);
+        CarPosting carPosting = new CarPosting(postingDate, description, price, carSelected.getCarId(), loggedInUserId, "Pending Approval");
         try{
             Connection conn = DatabaseConnection.getDatabaseConnection();
 
@@ -67,19 +69,23 @@ public class postAdServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int carId = 0;
-
         try {
-            loggedInUser = LoginUser.getLoginUser();
             carId = Integer.valueOf(request.getParameter("carId"));
+
             HttpSession session = request.getSession(false);
-            if(session == null || loggedInUser == null){
+            if(session == null){
+                getServletContext().getRequestDispatcher("/").forward(request, response);
+            }
+            String useridString = String.valueOf(session.getAttribute("loggedInUserId"));
+            String userType = String.valueOf(session.getAttribute("loggedInUserType"));
+            if(useridString == null || !userType.equalsIgnoreCase("Customer")){
                 getServletContext().getRequestDispatcher("/").forward(request, response);
             }
             else if(carId == 0){
                 getServletContext().getRequestDispatcher("/myCars").forward(request, response);
             }
             else {
-                int loggedInUserId = loggedInUser.getUserId();
+                int loggedInUserId = Integer.valueOf(useridString);
 
                 Connection conn = DatabaseConnection.getDatabaseConnection();
 

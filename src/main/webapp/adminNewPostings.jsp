@@ -9,7 +9,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <title>My Postings</title>
+    <title>New Postings</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="assets/css/main.css" />
@@ -63,7 +63,7 @@
                     <th>Year</th>
                     <th>Date(YYYY-MM-DD)</th>
                     <th>Price</th>
-                    <th>Status</th>
+                    <th>View</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -74,7 +74,9 @@
                         <td>${postingObj.car['year']}</td>
                         <td>${postingObj.carPosting['postingDate']}</td>
                         <td>$${postingObj.carPosting['price']}</td>
-                        <td>${postingObj.carPosting['status']}</td>
+                        <td>
+                            <a href="/adminViewPosting?carPostingId=${postingObj.carPosting['carPostingId']}" style="background-color: #585858; color: white; padding: 0.5em 0.5em;" > View </a>
+                        </td>
                     </tr>
                 </c:forEach>
                 </tbody>

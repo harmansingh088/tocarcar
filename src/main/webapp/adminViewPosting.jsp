@@ -1,15 +1,15 @@
 <%--
   Created by IntelliJ IDEA.
-  User: harman
-  Date: 2020-11-29
-  Time: 7:54 p.m.
+  User: Harman.Malhotra
+  Date: 12/4/2020
+  Time: 7:08 AM
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <title>Post Ad</title>
+    <title>View Postings</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="assets/css/main.css" />
@@ -43,8 +43,8 @@
         <h2>Menu</h2>
         <ul>
             <li><a href="/">Home</a></li>
-            <li><a href="/myCars">My Cars</a></li>
-            <li><a href="/myPostings" class="active">My Postings</a></li>
+            <li><a href="/adminAllUsers">All Users</a></li>
+            <li><a href="/adminNewPostings" class="active">New Postings</a></li>
             <li><a href="/logout">Logout</a></li>
         </ul>
     </nav>
@@ -53,44 +53,23 @@
     <div id="main">
         <div class="inner">
             <header id="inner">
-                <h1>Post an ad for your car</h1>
-                <p>Here you can add date, price and description for you car.</p>
+                <h1>Review ad</h1>
+                <p>Here you can approve/reject the customer's ad.</p>
             </header>
 
             <section>
-                <h3><c:out value="${requestScope.carSelected['company']}"/> <c:out value="${requestScope.carSelected['name']}"/></h3>
-                <h3>Year <c:out value="${requestScope.carSelected['year']}" /></h3>
-                <c:forEach items="${requestScope.imageBase64StringList}" var="carPhoto">
+                <h3><c:out value="${requestScope.carPostingWrapperObj.car['company']}"/> <c:out value="${requestScope.carPostingWrapperObj.car['name']}"/></h3>
+                <h3>Year <c:out value="${requestScope.carPostingWrapperObj.car['year']}" /></h3>
+                <c:forEach items="${requestScope.carPostingWrapperObj.carPhotos}" var="carPhoto">
                     <img src="data:image/jpg;base64,${carPhoto}" width="240" height="300"/>
                 </c:forEach>
+                <p><c:out value="${requestScope.carPostingWrapperObj.carPosting['description']}" /></p>
+                <h3>Date <c:out value="${requestScope.carPostingWrapperObj.carPosting['postingDate']}" /></h3>
+                <h3>Price $<c:out value="${requestScope.carPostingWrapperObj.carPosting['price']}" /></h3>
+
+
                 <form method="POST" action="/postAd">
-                    <div class="container">
 
-                        <label for="postingDate"><b>Date</b></label>
-                        <input type="date" name="postingDate" id="postingDate" placeholder="Posting Date" required/>
-                        <br>
-                        <br>
-                        <hr>
-
-                        <label for="description"><b>Description</b></label>
-                        <textarea name="description" id="description" rows="3" placeholder="Description" value="${requestScope.carSelected['description']}"></textarea>
-                        <br>
-                        <br>
-
-                        <label for="price"><b>Price</b></label>
-                        <input type="currency" name="price" id="price" placeholder="Price" min="10" required value="${requestScope.carSelected['price']}"/>
-                        <br>
-                        <br>
-                        <hr>
-
-
-                        <div class="field text-right">
-                            <label>&nbsp;</label>
-                            <ul class="actions">
-                                <li><input type="submit" value="Post Ad" class="primary" /></li>
-                            </ul>
-                        </div>
-                    </div>
                 </form>
             </section>
 
@@ -119,4 +98,3 @@
 
 </body>
 </html>
-

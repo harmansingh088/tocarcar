@@ -1,9 +1,7 @@
 package servlets;
 
-import models.Car;
 import models.User;
 import services.DatabaseConnection;
-import services.LoginUser;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -25,14 +23,16 @@ public class adminAllUsersServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-         HttpSession session = request.getSession(false);
-        User loggedInUser = LoginUser.getLoginUser();
-        if(session == null || loggedInUser == null){
+        HttpSession session = request.getSession(false);
+        if(session == null){
+            getServletContext().getRequestDispatcher("/").forward(request, response);
+        }
+        String useridString = String.valueOf(session.getAttribute("loggedInUserId"));
+        String userType = String.valueOf(session.getAttribute("loggedInUserType"));
+        if(useridString == null || !userType.equalsIgnoreCase("Admin")){
             getServletContext().getRequestDispatcher("/").forward(request, response);
         }
         else{
-            int loggedInUserId = loggedInUser.getUserId();
-
             try{
                 Connection conn = DatabaseConnection.getDatabaseConnection();
 

@@ -7,11 +7,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.*;
 
 import services.DatabaseConnection;
-import services.LoginUser;
 
 @WebServlet(name = "registrationServlet", urlPatterns = "/registration")
 public class registrationServlet extends HttpServlet {
@@ -56,7 +56,12 @@ public class registrationServlet extends HttpServlet {
                     if (generatedKeys.next()) {
                         int userId = generatedKeys.getInt(1);
                         newUser.setUserId(userId);
-                        LoginUser.setLoginUser(newUser);
+                        HttpSession sessionOld = request.getSession();
+                        sessionOld.invalidate();
+
+                        HttpSession sessionNew = request.getSession();
+                        sessionNew.setAttribute("loggedInUserId", newUser.getUserId());
+                        sessionNew.setAttribute("loggedInUserType", newUser.getUserType());
                         response.sendRedirect("/myCars");
                     }
                 }

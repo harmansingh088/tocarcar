@@ -1,16 +1,12 @@
 package servlets;
 
 import models.Car;
-import models.User;
 import services.DatabaseConnection;
-import services.LoginUser;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.*;
@@ -30,7 +26,16 @@ public class addCarServlet extends HttpServlet {
         int year = Integer.parseInt(request.getParameter("year"));
         String description = request.getParameter("description");
         double price = Double.parseDouble(request.getParameter("price"));
-        int userId = LoginUser.getLoginUser().getUserId();
+        HttpSession session = request.getSession(false);
+        if(session == null){
+            getServletContext().getRequestDispatcher("/").forward(request, response);
+        }
+        String useridString = String.valueOf(session.getAttribute("loggedInUserId"));
+        String userType = String.valueOf(session.getAttribute("loggedInUserType"));
+        if(useridString == null || !userType.equalsIgnoreCase("Customer")){
+            getServletContext().getRequestDispatcher("/").forward(request, response);
+        }
+        int userId = Integer.parseInt(useridString);
 
         Car newCar = new Car(company, name, colour, year, description, price, userId);
 
@@ -119,8 +124,11 @@ public class addCarServlet extends HttpServlet {
         request.setAttribute("companyNames", companyNames);
 
         HttpSession session = request.getSession(false);
-        User loggedInUser = LoginUser.getLoginUser();
-        if(session == null || loggedInUser == null){
+        if(session == null){
+            getServletContext().getRequestDispatcher("/").forward(request, response);
+        }
+        Object useridObj = session.getAttribute("loggedInUserId");
+        if(useridObj == null){
             getServletContext().getRequestDispatcher("/").forward(request, response);
         }
         else{

@@ -1,5 +1,4 @@
 <%@ page import="models.User" %>
-<%@ page import="services.LoginUser" %><%--
   Created by IntelliJ IDEA.
   User: harman
   Date: 2020-11-16
@@ -44,18 +43,18 @@
         <ul>
             <li><a href="/" class="active">Home</a></li>
             <%
-                HttpSession sessionOld = request.getSession(false);
-                User user = LoginUser.getLoginUser();
-                if(sessionOld == null || user == null){
+                Object useridString = session.getAttribute("loggedInUserId");
+                String userType = String.valueOf(session.getAttribute("loggedInUserType"));
+                if(useridString == null){
                 %><li><a href="/registration">Sign Up</a></li>
                     <li><a href="/login">Log In</a></li> <%
                 }
-                else if(user.getUserType().equalsIgnoreCase("Admin")){
+                else if(userType.equalsIgnoreCase("Admin")){
                     %><li><a href="/adminAllUsers">All Users</a></li>
                         <li><a href="/adminNewPostings">New Postings</a></li>
                      <li><a href="/logout">Logout</a></li> <%
                 }
-                else if (user.getUserType().equalsIgnoreCase("Customer")){
+                else if (userType.equalsIgnoreCase("Customer")){
                     %><li><a href="/myCars">My Cars</a></li>
                         <li><a href="/myPostings">My Postings</a></li>
                         <li><a href="/logout">Logout</a></li> <%
