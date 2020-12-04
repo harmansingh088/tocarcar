@@ -8,10 +8,7 @@ import services.LoginUser;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.Part;
+import javax.servlet.http.*;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -87,6 +84,8 @@ public class addCarServlet extends HttpServlet {
                         preparedStmtPhotos.executeBatch();
                     }
 
+                    response.sendRedirect("/myCars");
+
                 }
                 else {
                     throw new SQLException("Creating user failed, no ID obtained.");
@@ -102,14 +101,29 @@ public class addCarServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         ArrayList<String> companyNames = new ArrayList<String>();
-        companyNames.add("Toyota");
-        companyNames.add("Honda");
+        companyNames.add("Acura");
+        companyNames.add("Audi");
+        companyNames.add("BMW");
+        companyNames.add("Chevrolet");
+        companyNames.add("Chrysler");
         companyNames.add("Dodge");
+        companyNames.add("Ford");
+        companyNames.add("GMC");
+        companyNames.add("Honda");
+        companyNames.add("Jeep");
+        companyNames.add("Lexus");
         companyNames.add("Mazda");
+        companyNames.add("Mercedes");
+        companyNames.add("Toyota");
+        companyNames.add("Volvo");
         request.setAttribute("companyNames", companyNames);
 
+        HttpSession session = request.getSession(false);
         User loggedInUser = LoginUser.getLoginUser();
-        if(loggedInUser != null){
+        if(session == null || loggedInUser == null){
+            getServletContext().getRequestDispatcher("/").forward(request, response);
+        }
+        else{
             getServletContext().getRequestDispatcher("/addCar.jsp").forward(request, response);
         }
     }

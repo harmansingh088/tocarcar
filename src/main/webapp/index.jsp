@@ -44,15 +44,21 @@
         <ul>
             <li><a href="/" class="active">Home</a></li>
             <%
+                HttpSession sessionOld = request.getSession(false);
                 User user = LoginUser.getLoginUser();
-                if(user == null){
+                if(sessionOld == null || user == null){
                 %><li><a href="/registration">Sign Up</a></li>
                     <li><a href="/login">Log In</a></li> <%
                 }
-                else{
+                else if(user.getUserType().equalsIgnoreCase("Admin")){
+                    %><li><a href="/adminAllUsers">All Users</a></li>
+                        <li><a href="/adminNewPostings">New Postings</a></li>
+                     <li><a href="/logout">Logout</a></li> <%
+                }
+                else if (user.getUserType().equalsIgnoreCase("Customer")){
                     %><li><a href="/myCars">My Cars</a></li>
                         <li><a href="/myPostings">My Postings</a></li>
-                     <li><a href="/logout">Logout</a></li> <%
+                        <li><a href="/logout">Logout</a></li> <%
                 }
             %>
 

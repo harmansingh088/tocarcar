@@ -27,7 +27,7 @@ public class registrationServlet extends HttpServlet {
 
         int age = Integer.parseInt(request.getParameter("age"));
 
-        User newUser = new User(firstName, lastName, email, password, phoneNumber, age);
+        User newUser = new User(firstName, lastName, email, password, "Customer", phoneNumber, age);
 
         try{
             Connection conn = DatabaseConnection.getDatabaseConnection();

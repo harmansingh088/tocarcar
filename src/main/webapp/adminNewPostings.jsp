@@ -2,7 +2,7 @@
   Created by IntelliJ IDEA.
   User: Harman.Malhotra
   Date: 12/3/2020
-  Time: 12:06 PM
+  Time: 10:20 PM
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -43,8 +43,8 @@
         <h2>Menu</h2>
         <ul>
             <li><a href="/">Home</a></li>
-            <li><a href="/myCars">My Cars</a></li>
-            <li><a href="/myPostings" class="active">My Postings</a></li>
+            <li><a href="/adminAllUsers">All Users</a></li>
+            <li><a href="/adminNewPostings" class="active">New Postings</a></li>
             <li><a href="/logout">Logout</a></li>
         </ul>
     </nav>
@@ -53,7 +53,7 @@
     <div id="main">
         <div class="inner">
             <header id="inner">
-                <h1>My Postings</h1>
+                <h1>New Postings to Approve/Reject</h1>
             </header>
             <table class="styled-table">
                 <thead>
@@ -67,7 +67,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <c:forEach items="${requestScope.myPostings}" var="postingObj">
+                <c:forEach items="${requestScope.adminNewPostings}" var="postingObj">
                     <tr>
                         <td>${postingObj.car['company']}</td>
                         <td>${postingObj.car['name']}</td>

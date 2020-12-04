@@ -18,14 +18,14 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-@WebServlet(name = "myCarsServlet", urlPatterns = "/myCars")
-public class myCarsServlet extends HttpServlet {
+@WebServlet(name = "adminAllUsersServlet", urlPatterns = "/adminAllUsers")
+public class adminAllUsersServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        HttpSession session = request.getSession(false);
+         HttpSession session = request.getSession(false);
         User loggedInUser = LoginUser.getLoginUser();
         if(session == null || loggedInUser == null){
             getServletContext().getRequestDispatcher("/").forward(request, response);
@@ -36,27 +36,28 @@ public class myCarsServlet extends HttpServlet {
             try{
                 Connection conn = DatabaseConnection.getDatabaseConnection();
 
-                String query = " select * from car where userId = ?";
+                String query = " select * from user where userType = ?";
 
                 PreparedStatement preparedStmt = conn.prepareStatement(query);
-                preparedStmt.setInt (1, loggedInUserId);
+                preparedStmt.setString (1, "Customer");
 
                 ResultSet rs = preparedStmt.executeQuery();
 
-                List<Car> userCars = new ArrayList<Car>();
+                List<User> allCustomers = new ArrayList<User>();
                 while (rs.next()) {
-                    Car newCar = new Car(rs.getString("company"),
-                            rs.getString("name"),
-                            rs.getString("colour"),
-                            rs.getInt("year"),
-                            rs.getString("description"),
-                            rs.getDouble("price"),
-                            rs.getInt("userId"));
-                    newCar.setCarId(rs.getInt("carId"));
-                    userCars.add(newCar);
+                    User customer = new User(
+                            rs.getString("firstName"),
+                            rs.getString("lastName"),
+                            rs.getString("email"),
+                            rs.getString("password"),
+                            rs.getString("userType"),
+                            rs.getString("phoneNumber"),
+                            rs.getInt("age"));
+                    customer.setUserId(rs.getInt("userId"));
+                    allCustomers.add(customer);
                 }
 
-                request.setAttribute("userCars", userCars);
+                request.setAttribute("allCustomers", allCustomers);
 
                 rs.close();
 
@@ -67,8 +68,7 @@ public class myCarsServlet extends HttpServlet {
                 System.out.println(e.getLocalizedMessage());
             }
 
-            getServletContext().getRequestDispatcher("/myCars.jsp").forward(request, response);
+            getServletContext().getRequestDispatcher("/adminAllUsers.jsp").forward(request, response);
         }
-
     }
 }

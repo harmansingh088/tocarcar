@@ -2,14 +2,14 @@
   Created by IntelliJ IDEA.
   User: Harman.Malhotra
   Date: 12/3/2020
-  Time: 12:06 PM
+  Time: 10:04 PM
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <title>My Postings</title>
+    <title>My Cars</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="assets/css/main.css" />
@@ -43,8 +43,8 @@
         <h2>Menu</h2>
         <ul>
             <li><a href="/">Home</a></li>
-            <li><a href="/myCars">My Cars</a></li>
-            <li><a href="/myPostings" class="active">My Postings</a></li>
+            <li><a href="/adminAllUsers" class="active">All Users</a></li>
+            <li><a href="/adminNewPostings">New Postings</a></li>
             <li><a href="/logout">Logout</a></li>
         </ul>
     </nav>
@@ -53,28 +53,26 @@
     <div id="main">
         <div class="inner">
             <header id="inner">
-                <h1>My Postings</h1>
+                <h1>All Users</h1>
+                <p>This is the list of all registered users.</p>
             </header>
+
             <table class="styled-table">
                 <thead>
                 <tr>
-                    <th>Company</th>
                     <th>Name</th>
-                    <th>Year</th>
-                    <th>Date(YYYY-MM-DD)</th>
-                    <th>Price</th>
-                    <th>Status</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Age</th>
                 </tr>
                 </thead>
                 <tbody>
-                <c:forEach items="${requestScope.myPostings}" var="postingObj">
+                <c:forEach items="${requestScope.allCustomers}" var="customer">
                     <tr>
-                        <td>${postingObj.car['company']}</td>
-                        <td>${postingObj.car['name']}</td>
-                        <td>${postingObj.car['year']}</td>
-                        <td>${postingObj.carPosting['postingDate']}</td>
-                        <td>$${postingObj.carPosting['price']}</td>
-                        <td>${postingObj.carPosting['status']}</td>
+                        <td>${customer['firstName']} ${customer['lastName']}</td>
+                        <td>${customer['email']}</td>
+                        <td>${customer['phoneNumber']}</td>
+                        <td>${customer['age']}</td>
                     </tr>
                 </c:forEach>
                 </tbody>

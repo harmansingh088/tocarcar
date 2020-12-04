@@ -8,10 +8,7 @@ import services.LoginUser;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.Part;
+import javax.servlet.http.*;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -74,7 +71,8 @@ public class postAdServlet extends HttpServlet {
         try {
             loggedInUser = LoginUser.getLoginUser();
             carId = Integer.valueOf(request.getParameter("carId"));
-            if (loggedInUser == null) {
+            HttpSession session = request.getSession(false);
+            if(session == null || loggedInUser == null){
                 getServletContext().getRequestDispatcher("/").forward(request, response);
             }
             else if(carId == 0){

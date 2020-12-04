@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -40,14 +41,19 @@ public class loginServlet extends HttpServlet {
             ResultSet rs = preparedStmt.executeQuery();
 
             if (rs.next()) {
-                loggedInUser = new User(rs.getString("firstName"),
+                loggedInUser = new User(
+                        rs.getString("firstName"),
                         rs.getString("lastName"),
                         rs.getString("email"),
                         rs.getString("password"),
+                        rs.getString("userType"),
                         rs.getString("phoneNumber"),
                         rs.getInt("age"));
                 loggedInUser.setUserId(rs.getInt("userId"));
                 LoginUser.setLoginUser(loggedInUser);
+
+                HttpSession session = request.getSession();
+                session.setAttribute("loggedInUserId", loggedInUser.getUserId());
             }
 
             rs.close();
@@ -60,7 +66,11 @@ public class loginServlet extends HttpServlet {
         }
 
         if(loggedInUser != null){
-            response.sendRedirect("/myCars");
+            if(loggedInUser.getUserType().equalsIgnoreCase("Admin"))
+                response.sendRedirect("/adminNewPostings");
+            else{
+                response.sendRedirect("/myCars");
+            }
         }
         else{
             request.setAttribute("isLoginError", true);

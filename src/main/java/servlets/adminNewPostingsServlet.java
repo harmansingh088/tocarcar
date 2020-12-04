@@ -21,9 +21,8 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-@WebServlet(name = "myPostingsServlet", urlPatterns = "/myPostings")
-public class myPostingsServlet extends HttpServlet {
-
+@WebServlet(name = "adminNewPostingsServlet", urlPatterns = "/adminNewPostings")
+public class adminNewPostingsServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
     }
@@ -31,7 +30,7 @@ public class myPostingsServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession(false);
         User loggedInUser = LoginUser.getLoginUser();
-        if(session == null || loggedInUser == null){
+        if(session == null || loggedInUser == null || !loggedInUser.getUserType().equalsIgnoreCase("Admin")){
             getServletContext().getRequestDispatcher("/").forward(request, response);
         }
         else{
@@ -43,16 +42,16 @@ public class myPostingsServlet extends HttpServlet {
                 String query = " select * " +
                         " from carPosting cp inner join car c " +
                         " on cp.carId = c.carId " +
-                        " where cp.ownerId = ? AND cp.postingDate >= ? " +
+                        " where cp.status = ? AND cp.postingDate >= ? " +
                         " order by cp.postingDate ";
 
                 PreparedStatement preparedStmt = conn.prepareStatement(query);
-                preparedStmt.setInt (1, loggedInUserId);
+                preparedStmt.setString (1, "Pending Approval");
                 preparedStmt.setDate (2, new Date(System.currentTimeMillis()));
 
                 ResultSet rs = preparedStmt.executeQuery();
 
-                List<CarPostingWrapper> myPostings = new ArrayList<CarPostingWrapper>();
+                List<CarPostingWrapper> adminNewPostings = new ArrayList<CarPostingWrapper>();
                 while (rs.next()) {
                     CarPosting carPosting = new CarPosting(
                             rs.getDate("cp.postingDate"),
@@ -61,7 +60,7 @@ public class myPostingsServlet extends HttpServlet {
                             rs.getInt("cp.carId"),
                             rs.getInt("cp.ownerId"),
                             rs.getString("cp.status")
-                            );
+                    );
                     carPosting.setCarId(rs.getInt("cp.carId"));
 
                     Car newCar = new Car(
@@ -78,10 +77,10 @@ public class myPostingsServlet extends HttpServlet {
                     CarPostingWrapper carPostingWrapperObj = new CarPostingWrapper();
                     carPostingWrapperObj.setCarPosting(carPosting);
                     carPostingWrapperObj.setCar(newCar);
-                    myPostings.add(carPostingWrapperObj);
+                    adminNewPostings.add(carPostingWrapperObj);
                 }
 
-                request.setAttribute("myPostings", myPostings);
+                request.setAttribute("adminNewPostings", adminNewPostings);
 
                 rs.close();
 
@@ -92,7 +91,7 @@ public class myPostingsServlet extends HttpServlet {
                 System.out.println(e.getLocalizedMessage());
             }
 
-            getServletContext().getRequestDispatcher("/myPostings.jsp").forward(request, response);
+            getServletContext().getRequestDispatcher("/adminNewPostings.jsp").forward(request, response);
         }
     }
 }
