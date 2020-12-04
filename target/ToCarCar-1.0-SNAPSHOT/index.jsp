@@ -43,8 +43,6 @@
         <h2>Menu</h2>
         <ul>
             <li><a href="/" class="active">Home</a></li>
-            <li><a href="about.jsp">About Us</a></li>
-            <li><a href="contact.jsp">Contact Us</a></li>
             <%
                 User user = LoginUser.getLoginUser();
                 if(user == null){
@@ -53,7 +51,7 @@
                 }
                 else{
                     %><li><a href="/myCars">My Cars</a></li>
-                    <li><a href="/addCar">Add Car</a></li>
+                        <li><a href="/myPostings">My Postings</a></li>
                      <li><a href="/logout">Logout</a></li> <%
                 }
             %>

@@ -10,7 +10,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <title>Phantom by HTML5 UP</title>
+    <title>My Cars</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="assets/css/main.css" />
@@ -25,7 +25,7 @@
         <div class="inner">
 
             <!-- Logo -->
-            <a href="index.jsp" class="logo">
+            <a href="/" class="logo">
                 <span class="fa fa-car"></span> <span class="title">To Car Car</span>
             </a>
 
@@ -43,10 +43,9 @@
     <nav id="menu">
         <h2>Menu</h2>
         <ul>
-            <li><a href="/" class="active">Home</a></li>
-            <li><a href="about.jsp">About Us</a></li>
-            <li><a href="/myCars">My Cars</a></li>
-            <li><a href="/addCar">Add Car</a></li>
+            <li><a href="/">Home</a></li>
+            <li><a href="/myCars" class="active">My Cars</a></li>
+            <li><a href="/myPostings">My Postings</a></li>
             <li><a href="/logout">Logout</a></li>
         </ul>
     </nav>
@@ -58,6 +57,11 @@
                 <h1>Added Cars</h1>
                 <p>These are all your added cars.</p>
             </header>
+
+            <div>
+                <a href="/addCar" style="background-color: #585858; color: white; font-weight: bold; padding: 0.5em 0.5em;" > Add Car </a>
+            </div>
+
             <table class="styled-table">
                 <thead>
                 <tr>
@@ -75,14 +79,13 @@
                             <td>${car['name']}</td>
                             <td>${car['year']}</td>
                             <td>${car['price']}</td>
-                            <td><a href="/postAd?carId=${car['carId']}"> Post Ad</a></td>
+                            <td>
+                                <a href="/postAd?carId=${car['carId']}" style="background-color: #585858; color: white; padding: 0.5em 0.5em;" > Post Ad </a>
+                            </td>
                         </tr>
                     </c:forEach>
                 </tbody>
             </table>
-            <div class="container signin">
-                <p>Add more cars <a href="/addCar">Add Car</a>.</p>
-            </div>
         </div>
     </div>
 

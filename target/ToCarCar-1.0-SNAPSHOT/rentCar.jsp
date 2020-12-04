@@ -43,7 +43,6 @@
         <h2>Menu</h2>
         <ul>
             <li><a href="/" class="active">Home</a></li>
-            <li><a href="about.jsp">About Us</a></li>
             <li><a href="/logout">Log Out</a></li>
         </ul>
     </nav>

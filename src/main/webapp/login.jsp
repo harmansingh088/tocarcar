@@ -43,8 +43,6 @@
         <h2>Menu</h2>
         <ul>
             <li><a href="/">Home</a></li>
-            <li><a href="about.jsp">About Us</a></li>
-            <li><a href="contact.jsp">Contact Us</a></li>
             <li><a href="/registration">Sign Up</a></li>
             <li><a href="/login" class="active">Log In</a></li>
         </ul>

@@ -9,7 +9,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <title>Phantom by HTML5 UP</title>
+    <title>Add Car</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="assets/css/main.css" />
@@ -24,7 +24,7 @@
         <div class="inner">
 
             <!-- Logo -->
-            <a href="index.jsp" class="logo">
+            <a href="/" class="logo">
                 <span class="fa fa-car"></span> <span class="title">To Car Car</span>
             </a>
 
@@ -42,11 +42,9 @@
     <nav id="menu">
         <h2>Menu</h2>
         <ul>
-            <li><a href="/" class="active">Home</a></li>
-            <li><a href="about.jsp">About Us</a></li>
-            <li><a href="contact.jsp">Contact Us</a></li>
-            <li><a href="/myCars">My Cars</a></li>
-            <li><a href="/addCar">Add Car</a></li>
+            <li><a href="/" >Home</a></li>
+            <li><a href="/myCars" class="active">My Cars</a></li>
+            <li><a href="/myPostings">My Postings</a></li>
             <li><a href="/logout">Logout</a></li>
         </ul>
     </nav>
@@ -54,55 +52,61 @@
     <!-- Main -->
     <div id="main">
         <div class="inner">
-            <span class="image main"><a href="#inner" class="scrolly"><img src="images/banner.jpg" alt="" /></a></span>
-
             <header id="inner">
-                <h1>Add car to your inventory</h1>
-                <p>Etiam quis viverra lorem, in semper lorem. Sed nisl arcu euismod sit amet nisi euismod sed cursus arcu elementum ipsum arcu vivamus quis venenatis orci lorem ipsum et magna feugiat veroeros aliquam. Lorem ipsum dolor sit amet nullam dolore.</p>
+                <h1>Add car</h1>
+                <p>You can add car to your inventory for which you can then post ad.</p>
             </header>
 
             <section>
                 <form method="POST" action="/addCar" enctype="multipart/form-data">
-                    <div class="fields">
-                        <div class="field">
-                            <select name="company" id="company">
+                    <div class="container">
 
-                                <option value="">Select Company</option>
-                                <c:forEach items="${requestScope.companyNames}" var="company">
-                                    <option value="${company}">${company}</option>
-                                </c:forEach>
-                            </select>
-                        </div>
+                        <label for="company"><b>Company</b></label>
+                        <select name="company" id="company" required>
+                            <option value="">Select Company</option>
+                            <c:forEach items="${requestScope.companyNames}" var="company">
+                                <option value="${company}">${company}</option>
+                            </c:forEach>
+                        </select>
+                        <br>
+                        <br>
 
-                        <div class="field">
-                            <input type="text" name="name" id="name" placeholder="Name" />
-                        </div>
+                        <label for="name"><b>Name</b></label>
+                        <input type="text" name="name" id="name" placeholder="Name" required/>
+                        <br>
+                        <br>
 
-                        <div class="field">
-                            <input type="text" name="colour" id="colour" placeholder="Colour" />
-                        </div>
+                        <label for="colour"><b>Colour</b></label>
+                        <input type="text" name="colour" id="colour" placeholder="Colour" required/>
+                        <br>
 
-                        <div class="field">
-                            <input type="number" name="year" id="year" placeholder="Year" />
-                        </div>
+                        <label for="year"><b>Year</b></label>
+                        <input type="number" name="year" id="year" placeholder="Year" min="2006" max="2021" required/>
+                        <br>
+                        <br>
+                        <hr>
 
-                        <div class="field">
-                            <textarea name="description" id="description" rows="3" placeholder="Description"></textarea>
-                        </div>
+                        <label for="description"><b>Description</b></label>
+                        <textarea name="description" id="description" rows="3" placeholder="Description"></textarea>
+                        <br>
+                        <br>
 
-                        <div class="field">
-                            <input type="currency" name="price" id="price" placeholder="Price" />
-                        </div>
+                        <label for="price"><b>Price</b></label>
+                        <input type="currency" name="price" id="price" placeholder="Price" min="10" required/>
+                        <br>
+                        <br>
+                        <hr>
 
-                        <div class="field">
-                            <input type="file" name="photos" id="photos" accept="image/x-png,image/gif,image/jpeg" multiple/>
-                        </div>
+                        <label for="photos"><b>Photos</b></label>
+                        <input type="file" name="photos" id="photos" accept="image/x-png,image/gif,image/jpeg" multiple/>
+                        <br>
+                        <br>
+                        <hr>
 
                         <div class="field text-right">
                             <label>&nbsp;</label>
-
                             <ul class="actions">
-                                <li><input type="submit" value="Send" class="primary" /></li>
+                                <li><input type="submit" value="Add Car" class="primary" /></li>
                             </ul>
                         </div>
                     </div>
@@ -115,29 +119,8 @@
     <!-- Footer -->
     <footer id="footer">
         <div class="inner">
-            <section>
-                <h2>Contact Info</h2>
-
-                <ul class="alt">
-                    <li><span class="fa fa-envelope-o"></span> <a href="#">carrentalwebsite@untitled.tld</a></li>
-                    <li><span class="fa fa-phone"></span> (000) 000-0000 x12387 </li>
-                    <li><span class="fa fa-map-pin"></span> 1234 Somewhere Road #5432 Nashville, TN 00000 United States of America</li>
-                </ul>
-
-                <h2>Follow Us</h2>
-
-                <ul class="icons">
-                    <li><a href="#" class="icon style2 fa-twitter"><span class="label">Twitter</span></a></li>
-                    <li><a href="#" class="icon style2 fa-facebook"><span class="label">Facebook</span></a></li>
-                    <li><a href="#" class="icon style2 fa-instagram"><span class="label">Instagram</span></a></li>
-                    <li><a href="#" class="icon style2 fa-linkedin"><span class="label">LinkedIn</span></a></li>
-                    <li><a href="#" class="icon style2 fa-pinterest"><span class="label">Pinterest</span></a></li>
-                </ul>
-            </section>
-
             <ul class="copyright">
-                <li>&copy; 2018 <a href="#">Car Rental Company Ltd</a> | All rights reserved.</li>
-                <li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
+                <li>&copy; 2020 To Car Car | All rights reserved.</li>
             </ul>
         </div>
     </footer>

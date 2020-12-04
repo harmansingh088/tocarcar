@@ -24,7 +24,7 @@
         <div class="inner">
 
             <!-- Logo -->
-            <a href="index.jsp" class="logo">
+            <a href="/" class="logo">
                 <span class="fa fa-car"></span> <span class="title">To Car Car</span>
             </a>
 
@@ -42,11 +42,9 @@
     <nav id="menu">
         <h2>Menu</h2>
         <ul>
-            <li><a href="/" class="active">Home</a></li>
-            <li><a href="about.jsp">About Us</a></li>
-            <li><a href="contact.jsp">Contact Us</a></li>
+            <li><a href="/">Home</a></li>
             <li><a href="/myCars">My Cars</a></li>
-            <li><a href="/addCar">Add Car</a></li>
+            <li><a href="/myPostings" class="active">My Postings</a></li>
             <li><a href="/logout">Logout</a></li>
         </ul>
     </nav>
@@ -54,56 +52,42 @@
     <!-- Main -->
     <div id="main">
         <div class="inner">
-            <span class="image main"><a href="#inner" class="scrolly"><img src="images/banner.jpg" alt="" /></a></span>
-
             <header id="inner">
                 <h1>Post an ad for your car</h1>
-                <p>Etiam quis viverra lorem, in semper lorem. Sed nisl arcu euismod sit amet nisi euismod sed cursus arcu elementum ipsum arcu vivamus quis venenatis orci lorem ipsum et magna feugiat veroeros aliquam. Lorem ipsum dolor sit amet nullam dolore.</p>
+                <p>Here you can add date, price and description for you car.</p>
             </header>
 
             <section>
-                <h2></h2>
-                <form method="POST" action="/postAd" enctype="multipart/form-data">
-                    <div class="fields">
-                        <div class="field">
-                            <select name="company" id="company">
+                <h3><c:out value="${requestScope.carSelected['company']}"/> <c:out value="${requestScope.carSelected['name']}"/></h3>
+                <h3>Year <c:out value="${requestScope.carSelected['year']}" /></h3>
+                <c:forEach items="${requestScope.imageBase64StringList}" var="carPhoto">
+                    <img src="data:image/jpg;base64,${carPhoto}" width="240" height="300"/>
+                </c:forEach>
+                <form method="POST" action="/postAd">
+                    <div class="container">
 
-                                <option value="">Select Company</option>
-                                <c:forEach items="${requestScope.companyNames}" var="company">
-                                    <option value="${company}">${company}</option>
-                                </c:forEach>
-                            </select>
-                        </div>
+                        <label for="postingDate"><b>Date</b></label>
+                        <input type="date" name="postingDate" id="postingDate" placeholder="Posting Date" required/>
+                        <br>
+                        <br>
+                        <hr>
 
-                        <div class="field">
-                            <input type="text" name="name" id="name" placeholder="Name" />
-                        </div>
+                        <label for="description"><b>Description</b></label>
+                        <textarea name="description" id="description" rows="3" placeholder="Description" value="${requestScope.carSelected['description']}"></textarea>
+                        <br>
+                        <br>
 
-                        <div class="field">
-                            <input type="text" name="colour" id="colour" placeholder="Colour" />
-                        </div>
+                        <label for="price"><b>Price</b></label>
+                        <input type="currency" name="price" id="price" placeholder="Price" min="10" required value="${requestScope.carSelected['price']}"/>
+                        <br>
+                        <br>
+                        <hr>
 
-                        <div class="field">
-                            <input type="number" name="year" id="year" placeholder="Year" />
-                        </div>
-
-                        <div class="field">
-                            <textarea name="description" id="description" rows="3" placeholder="Description"></textarea>
-                        </div>
-
-                        <div class="field">
-                            <input type="currency" name="price" id="price" placeholder="Price" />
-                        </div>
-
-                        <div class="field">
-                            <input type="file" name="photos" id="photos" accept="image/x-png,image/gif,image/jpeg" multiple/>
-                        </div>
 
                         <div class="field text-right">
                             <label>&nbsp;</label>
-
                             <ul class="actions">
-                                <li><input type="submit" value="Send" class="primary" /></li>
+                                <li><input type="submit" value="Post Ad" class="primary" /></li>
                             </ul>
                         </div>
                     </div>
