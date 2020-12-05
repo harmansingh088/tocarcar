@@ -74,7 +74,7 @@
 
             <header id="inner">
                 <h1>Rent a car at low prices</h1>
-                <p>Etiam quis viverra lorem, in semper lorem. Sed nisl arcu euismod sit amet nisi euismod sed cursus arcu elementum ipsum arcu vivamus quis venenatis orci lorem ipsum et magna feugiat veroeros aliquam. Lorem ipsum dolor sit amet nullam dolore.</p>
+                <p></p>
             </header>
 
             <section class="tiles">
@@ -88,7 +88,7 @@
                         <p>price from: <strong> $ 140.00</strong></p>
 
                         <div class="content">
-                            <p>Available Vehicles: <br> Opel Astra | Tesla Model S | Mazda 6</p>
+                            <p>Available Vehicles: <br> Audi | BMW | Mercedes</p>
                         </div>
                     </a>
                 </article>
@@ -102,7 +102,7 @@
                         <p>price from: <strong>$ 120.00</strong></p>
 
                         <div class="content">
-                            <p>Available Vehicles: <br> Opel Astra | Tesla Model S | Mazda 6</p>
+                            <p>Available Vehicles: <br> Acura| Dodge | Lexus</p>
                         </div>
                     </a>
                 </article>
@@ -116,7 +116,7 @@
                         <p>price from: <strong>$ 75.00</strong></p>
 
                         <div class="content">
-                            <p>Available Vehicles: <br> Opel Astra | Tesla Model S | Mazda 6</p>
+                            <p>Available Vehicles: <br> Toyota | Honda | Mazda </p>
                         </div>
                     </a>
                 </article>
@@ -130,7 +130,7 @@
                         <p>price from: <strong> $ 65.00</strong></p>
 
                         <div class="content">
-                            <p>Available Vehicles: <br> Opel Astra | Tesla Model S | Mazda 6</p>
+                            <p>Available Vehicles: <br> Toyota | Honda | Mazda</p>
                         </div>
                     </a>
                 </article>
@@ -144,7 +144,7 @@
                         <p>price from: <strong>$ 55.00</strong></p>
 
                         <div class="content">
-                            <p>Available Vehicles: <br> Opel Astra | Tesla Model S | Mazda 6</p>
+                            <p>Available Vehicles: <br> Chevrolet | Ford</p>
                         </div>
                     </a>
                 </article>
@@ -158,7 +158,7 @@
                         <p>price from: <strong>$ 49.00</strong></p>
 
                         <div class="content">
-                            <p>Available Vehicles: <br> Opel Astra | Tesla Model S | Mazda 6</p>
+                            <p>Available Vehicles: <br> Kia | Hyundai</p>
                         </div>
                     </a>
                 </article>
@@ -170,82 +170,16 @@
     <footer id="footer">
         <div class="inner">
             <section>
-                <h2>Book now</h2>
-                <form method="post" action="#">
-                    <div class="fields">
-                        <div class="field half">
-                            <input type="text" name="location" id="location" placeholder="Location" />
-                        </div>
-
-                        <div class="field half">
-                            <select name="vehicle-type" id="vehicle-type">
-                                <option value="">Select Vehicle Type</option>
-                                <option value="1">Large: Premium</option>
-                                <option value="2">Large: Station wagon</option>
-                                <option value="3">Medium: Low emission</option>
-                                <option value="4">Small: Economy</option>
-                                <option value="5">Small: Mini</option>
-                                <option value="6">Small: Mini Low emission</option>
-                            </select>
-                        </div>
-
-                        <div class="field half">
-                            <input type="text" name="date-from" id="date-from" placeholder="Date from" />
-                        </div>
-
-                        <div class="field half">
-                            <input type="text" name="date-to" id="date-to" placeholder="Date to" />
-                        </div>
-
-                        <div class="field">
-                            <input type="text" name="name" id="name" placeholder="Name" />
-                        </div>
-
-                        <div class="field half">
-                            <input type="text" name="email" id="email" placeholder="Email" />
-                        </div>
-
-                        <div class="field half">
-                            <input type="text" name="phone" id="phone" placeholder="Phone" />
-                        </div>
-
-                        <div class="field">
-                            <textarea name="message" id="message" rows="3" placeholder="Comment"></textarea>
-                        </div>
-
-                        <div class="field text-right">
-                            <label>&nbsp;</label>
-
-                            <ul class="actions">
-                                <li><input type="submit" value="Send" class="primary" /></li>
-                            </ul>
-                        </div>
-                    </div>
-                </form>
-            </section>
-            <section>
                 <h2>Contact Info</h2>
-
                 <ul class="alt">
-                    <li><span class="fa fa-envelope-o"></span> <a href="#">carrentalwebsite@untitled.tld</a></li>
-                    <li><span class="fa fa-phone"></span> (000) 000-0000 x12387 </li>
-                    <li><span class="fa fa-map-pin"></span> 1234 Somewhere Road #5432 Nashville, TN 00000 United States of America</li>
-                </ul>
-
-                <h2>Follow Us</h2>
-
-                <ul class="icons">
-                    <li><a href="#" class="icon style2 fa-twitter"><span class="label">Twitter</span></a></li>
-                    <li><a href="#" class="icon style2 fa-facebook"><span class="label">Facebook</span></a></li>
-                    <li><a href="#" class="icon style2 fa-instagram"><span class="label">Instagram</span></a></li>
-                    <li><a href="#" class="icon style2 fa-linkedin"><span class="label">LinkedIn</span></a></li>
-                    <li><a href="#" class="icon style2 fa-pinterest"><span class="label">Pinterest</span></a></li>
+                    <li><span class="fa fa-envelope-o"></span> <a href="#">tocarcar@example.com</a></li>
+                    <li><span class="fa fa-phone"></span> +1 1234567890 </li>
+                    <li><span class="fa fa-map-pin"></span> New Westminster, Canada</li>
                 </ul>
             </section>
 
             <ul class="copyright">
-                <li>&copy; 2018 <a href="#">Car Rental Company Ltd</a> | All rights reserved.</li>
-                <li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
+                <li>&copy; 2020 To Car Car | All rights reserved.</li>
             </ul>
         </div>
     </footer>

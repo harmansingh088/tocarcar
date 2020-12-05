@@ -46,7 +46,7 @@ public class myPostingsServlet extends HttpServlet {
                 String query = " select * " +
                         " from carPosting cp inner join car c " +
                         " on cp.carId = c.carId " +
-                        " inner join user u " +
+                        " inner join users u " +
                         " on c.userId = u.userId " +
                         " where cp.ownerId = ? AND cp.postingDate >= ? " +
                         " order by cp.postingDate ";

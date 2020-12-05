@@ -89,7 +89,7 @@ public class addCarServlet extends HttpServlet {
                         preparedStmtPhotos.executeBatch();
                     }
 
-                    response.sendRedirect("/myCars");
+                    response.sendRedirect("/myCars?carAdded=true");
 
                 }
                 else {

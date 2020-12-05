@@ -28,7 +28,10 @@ public class rentCarServlet extends HttpServlet {
     static CarPostingWrapper carPostingWrapperObj;
     static int loggedInUserId;
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        if(request.getParameter("Book") != null){
+        if(request.getParameter("Cancel") != null){
+            response.sendRedirect("/viewPostings");
+        }
+        else if(request.getParameter("Book") != null){
             Connection conn = DatabaseConnection.getDatabaseConnection();
             String query = " update carPosting " +
                     "set status = ?, renteeId = ? " +
@@ -45,8 +48,8 @@ public class rentCarServlet extends HttpServlet {
             catch(Exception e){
                 System.out.println(e.getLocalizedMessage());
             }
+            response.sendRedirect("/myBookings");
         }
-        response.sendRedirect("/myBookings");
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -67,7 +70,7 @@ public class rentCarServlet extends HttpServlet {
             String query = " select * " +
                     " from carPosting cp inner join car c " +
                     " on cp.carId = c.carId " +
-                    " inner join user u " +
+                    " inner join users u " +
                     " on c.userId = u.userId " +
                     " where cp.carPostingId = ?" +
                     " limit 1";

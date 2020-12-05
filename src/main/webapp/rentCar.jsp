@@ -70,7 +70,7 @@
 
 
                 <form method="POST" action="/rentCar" >
-                    <input type="submit" value="Cancel" name="Cancel" class="primary" style="background-color: #EEC213"/>
+                    <input type="submit" value="Go Back" name="Cancel" class="primary" style="background-color: #EEC213"/>
                     <input type="submit" value="Book" name="Book" class="primary" style="background-color: #3498DB;"/>
                 </form>
             </section>

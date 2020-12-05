@@ -26,7 +26,7 @@ public class loginServlet extends HttpServlet {
             Connection conn = DatabaseConnection.getDatabaseConnection();
 
             // the mysql insert statement
-            String query = " select * from user where email = ? and password = ? LIMIT 1";
+            String query = " select * from users where email = ? and password = ? LIMIT 1";
 
             // create the mysql insert preparedstatement
             PreparedStatement preparedStmt = conn.prepareStatement(query);

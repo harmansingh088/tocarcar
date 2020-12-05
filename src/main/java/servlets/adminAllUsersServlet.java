@@ -36,7 +36,7 @@ public class adminAllUsersServlet extends HttpServlet {
             try{
                 Connection conn = DatabaseConnection.getDatabaseConnection();
 
-                String query = " select * from user where userType = ?";
+                String query = " select * from users where userType = ?";
 
                 PreparedStatement preparedStmt = conn.prepareStatement(query);
                 preparedStmt.setString (1, "Customer");

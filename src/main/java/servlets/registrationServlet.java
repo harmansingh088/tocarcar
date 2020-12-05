@@ -33,7 +33,7 @@ public class registrationServlet extends HttpServlet {
             Connection conn = DatabaseConnection.getDatabaseConnection();
 
             // the mysql insert statement
-            String query = " insert into user (firstName, lastName, email, password, userType, phoneNumber, age)"
+            String query = " insert into users (firstName, lastName, email, password, userType, phoneNumber, age)"
                     + " values (?, ?, ?, ?, ?, ?, ?)";
 
             // create the mysql insert preparedstatement
