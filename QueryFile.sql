@@ -1,5 +1,3 @@
-CREATE DATABASE tocarcar;
-
 USE tocarcar;
 
 CREATE TABLE users (

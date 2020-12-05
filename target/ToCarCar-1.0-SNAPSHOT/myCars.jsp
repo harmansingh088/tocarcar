@@ -117,16 +117,30 @@
     function afterPageLoad(){
         var url_string = window.location.href;
         var url = new URL(url_string);
+
         var carAdded = url.searchParams.get("carAdded");
+        var fromRegistration = url.searchParams.get("fromRegistration");
+        var fromLogin = url.searchParams.get("fromLogin");
+
         if(carAdded){
-            let snackbar = document.getElementById("snackbar");
-            snackbar.innerText = "Congrats, Your car has been added!";
-            snackbar.style.backgroundColor = "#2ecc72"
-            snackbar.className = "show";
-            setTimeout(function(){
-                snackbar.className = snackbar.className.replace("show", "");
-            }, 5000);
+            showSnackbar("Congrats, Your car has been added!")
         }
+        else if(fromRegistration){
+            showSnackbar("Congrats, You have been successfully registered!")
+        }
+        else if(fromLogin){
+            showSnackbar("Welcome Back!")
+        }
+    }
+
+    function showSnackbar(message){
+        let snackbar = document.getElementById("snackbar");
+        snackbar.innerText = message;
+        snackbar.style.backgroundColor = "#2ecc72"
+        snackbar.className = "show";
+        setTimeout(function(){
+            snackbar.className = snackbar.className.replace("show", "");
+        }, 3000);
     }
 </script>
 
