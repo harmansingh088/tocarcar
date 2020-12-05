@@ -1,7 +1,5 @@
 package servlets;
 
-import models.Car;
-import models.CarPosting;
 import models.CarPostingWrapper;
 import services.CarPostingWrapperProvider;
 import services.DatabaseConnection;
@@ -20,9 +18,8 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-@WebServlet(name = "myPostingsServlet", urlPatterns = "/myPostings")
-public class myPostingsServlet extends HttpServlet {
-
+@WebServlet(name = "myBookingsServlet", urlPatterns = "/myBookings")
+public class myBookingsServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
     }
@@ -48,22 +45,30 @@ public class myPostingsServlet extends HttpServlet {
                         " on cp.carId = c.carId " +
                         " inner join user u " +
                         " on c.userId = u.userId " +
-                        " where cp.ownerId = ? AND cp.postingDate >= ? " +
+                        " where cp.renteeId = ?" +
                         " order by cp.postingDate ";
 
                 PreparedStatement preparedStmt = conn.prepareStatement(query);
                 preparedStmt.setInt (1, loggedInUserId);
-                preparedStmt.setDate (2, new Date(System.currentTimeMillis()));
 
                 ResultSet rs = preparedStmt.executeQuery();
 
-                List<CarPostingWrapper> myPostings = new ArrayList<CarPostingWrapper>();
+                List<CarPostingWrapper> myUpcomingBookings = new ArrayList<CarPostingWrapper>();
+                List<CarPostingWrapper> myOldBookings = new ArrayList<CarPostingWrapper>();
                 while (rs.next()) {
                     CarPostingWrapper carPostingWrapperObj = CarPostingWrapperProvider.getCarPostingWrapperObj(rs);
-                    myPostings.add(carPostingWrapperObj);
+                    Date currentDate = new Date(System.currentTimeMillis());
+                    if(currentDate.compareTo(carPostingWrapperObj.getCarPosting().getPostingDate()) > 0){
+                        myOldBookings.add(carPostingWrapperObj);
+                    }
+                    else{
+                        myUpcomingBookings.add(carPostingWrapperObj);
+                    }
+
                 }
 
-                request.setAttribute("myPostings", myPostings);
+                request.setAttribute("myUpcomingBookings", myUpcomingBookings);
+                request.setAttribute("myOldBookings", myOldBookings);
 
                 rs.close();
 
@@ -74,7 +79,7 @@ public class myPostingsServlet extends HttpServlet {
                 System.out.println(e.getLocalizedMessage());
             }
 
-            getServletContext().getRequestDispatcher("/myPostings.jsp").forward(request, response);
+            getServletContext().getRequestDispatcher("/myBookings.jsp").forward(request, response);
         }
     }
 }

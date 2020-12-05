@@ -45,6 +45,8 @@
             <li><a href="/">Home</a></li>
             <li><a href="/myCars">My Cars</a></li>
             <li><a href="/myPostings" class="active">My Postings</a></li>
+            <li><a href="/viewPostings">Rent Car</a></li>
+            <li><a href="/myBookings">My Bookings</a></li>
             <li><a href="/logout">Logout</a></li>
         </ul>
     </nav>

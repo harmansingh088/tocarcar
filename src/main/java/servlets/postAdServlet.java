@@ -2,6 +2,7 @@ package servlets;
 
 import models.Car;
 import models.CarPosting;
+import services.CarPhotosProvider;
 import services.DatabaseConnection;
 
 import javax.servlet.ServletException;
@@ -114,29 +115,8 @@ public class postAdServlet extends HttpServlet {
                     PreparedStatement preparedStmtPhotos = conn.prepareStatement(queryPhotos);
                     preparedStmtPhotos.setInt(1, carId);
 
-                    imageBase64StringList = new ArrayList<String>();
                     ResultSet rsPhotos = preparedStmtPhotos.executeQuery();
-                    while(rsPhotos.next()){
-                        Blob blob = rsPhotos.getBlob("photo");
-
-                        InputStream inputStream = blob.getBinaryStream();
-                        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-                        byte[] buffer = new byte[4096];
-                        int bytesRead = -1;
-
-                        while ((bytesRead = inputStream.read(buffer)) != -1) {
-                            outputStream.write(buffer, 0, bytesRead);
-                        }
-
-                        byte[] imageBytes = outputStream.toByteArray();
-
-                        String base64Image = Base64.getEncoder().encodeToString(imageBytes);
-
-                        imageBase64StringList.add(base64Image);
-
-                        inputStream.close();
-                        outputStream.close();
-                    }
+                    imageBase64StringList = CarPhotosProvider.getCarPhotos(rsPhotos);
                     request.setAttribute("imageBase64StringList", imageBase64StringList);
 
                     getServletContext().getRequestDispatcher("/postAd.jsp").forward(request, response);

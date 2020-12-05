@@ -54,6 +54,7 @@ public class loginServlet extends HttpServlet {
                 HttpSession sessionNew = request.getSession();
                 sessionNew.setAttribute("loggedInUserId", loggedInUser.getUserId());
                 sessionNew.setAttribute("loggedInUserType", loggedInUser.getUserType());
+                sessionNew.setAttribute("loggedInUserName", loggedInUser.getFirstName() + " " + loggedInUser.getLastName());
             }
 
             rs.close();

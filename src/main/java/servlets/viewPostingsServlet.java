@@ -1,7 +1,5 @@
 package servlets;
 
-import models.Car;
-import models.CarPosting;
 import models.CarPostingWrapper;
 import services.CarPostingWrapperProvider;
 import services.DatabaseConnection;
@@ -20,9 +18,8 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-@WebServlet(name = "myPostingsServlet", urlPatterns = "/myPostings")
-public class myPostingsServlet extends HttpServlet {
-
+@WebServlet(name = "viewPostingsServlet", urlPatterns = "/viewPostings")
+public class viewPostingsServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
     }
@@ -39,7 +36,6 @@ public class myPostingsServlet extends HttpServlet {
         }
         else{
             int loggedInUserId = Integer.valueOf(useridString);
-
             try{
                 Connection conn = DatabaseConnection.getDatabaseConnection();
 
@@ -48,22 +44,23 @@ public class myPostingsServlet extends HttpServlet {
                         " on cp.carId = c.carId " +
                         " inner join user u " +
                         " on c.userId = u.userId " +
-                        " where cp.ownerId = ? AND cp.postingDate >= ? " +
+                        " where cp.status = ? AND cp.postingDate >= ? AND ownerId != ?" +
                         " order by cp.postingDate ";
 
                 PreparedStatement preparedStmt = conn.prepareStatement(query);
-                preparedStmt.setInt (1, loggedInUserId);
+                preparedStmt.setString (1, "Approved");
                 preparedStmt.setDate (2, new Date(System.currentTimeMillis()));
+                preparedStmt.setInt (3, loggedInUserId);
+
 
                 ResultSet rs = preparedStmt.executeQuery();
 
-                List<CarPostingWrapper> myPostings = new ArrayList<CarPostingWrapper>();
+                List<CarPostingWrapper> approvedPostings = new ArrayList<CarPostingWrapper>();
                 while (rs.next()) {
-                    CarPostingWrapper carPostingWrapperObj = CarPostingWrapperProvider.getCarPostingWrapperObj(rs);
-                    myPostings.add(carPostingWrapperObj);
+                    approvedPostings.add(CarPostingWrapperProvider.getCarPostingWrapperObj(rs));
                 }
 
-                request.setAttribute("myPostings", myPostings);
+                request.setAttribute("approvedPostings", approvedPostings);
 
                 rs.close();
 
@@ -74,7 +71,7 @@ public class myPostingsServlet extends HttpServlet {
                 System.out.println(e.getLocalizedMessage());
             }
 
-            getServletContext().getRequestDispatcher("/myPostings.jsp").forward(request, response);
+            getServletContext().getRequestDispatcher("/viewPostings.jsp").forward(request, response);
         }
     }
 }

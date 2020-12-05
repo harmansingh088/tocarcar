@@ -3,6 +3,7 @@ package servlets;
 import models.Car;
 import models.CarPosting;
 import models.CarPostingWrapper;
+import models.User;
 import services.DatabaseConnection;
 
 import javax.servlet.ServletException;
@@ -42,6 +43,8 @@ public class adminNewPostingsServlet extends HttpServlet {
                 String query = " select * " +
                         " from carPosting cp inner join car c " +
                         " on cp.carId = c.carId " +
+                        " inner join user u " +
+                        " on c.userId = u.userId " +
                         " where cp.status = ? AND cp.postingDate >= ? " +
                         " order by cp.postingDate ";
 
@@ -73,10 +76,21 @@ public class adminNewPostingsServlet extends HttpServlet {
                             rs.getInt("c.userId"));
                     newCar.setCarId(rs.getInt("c.carId"));
 
+                    User user = new User(
+                            rs.getString("u.firstName"),
+                            rs.getString("u.lastName"),
+                            rs.getString("u.email"),
+                            "",
+                            rs.getString("u.userType"),
+                            rs.getString("u.phoneNumber"),
+                            rs.getInt("u.age")
+                    );
+
 
                     CarPostingWrapper carPostingWrapperObj = new CarPostingWrapper();
                     carPostingWrapperObj.setCarPosting(carPosting);
                     carPostingWrapperObj.setCar(newCar);
+                    carPostingWrapperObj.setUser(user);
                     adminNewPostings.add(carPostingWrapperObj);
                 }
 

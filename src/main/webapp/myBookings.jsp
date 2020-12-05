@@ -1,16 +1,15 @@
-<%@ page import="models.Car" %>
-<%@ page import="java.util.List" %><%--
+<%--
   Created by IntelliJ IDEA.
   User: Harman.Malhotra
-  Date: 12/1/2020
-  Time: 11:33 AM
+  Date: 12/4/2020
+  Time: 1:03 PM
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <title>My Cars</title>
+    <title>My Bookings</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="assets/css/main.css" />
@@ -43,11 +42,11 @@
     <nav id="menu">
         <h2>Menu</h2>
         <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="/myCars" class="active">My Cars</a></li>
+            <li><a href="/" >Home</a></li>
+            <li><a href="/myCars">My Cars</a></li>
             <li><a href="/myPostings">My Postings</a></li>
             <li><a href="/viewPostings">Rent Car</a></li>
-            <li><a href="/myBookings">My Bookings</a></li>
+            <li><a href="/myBookings" class="active">My Bookings</a></li>
             <li><a href="/logout">Logout</a></li>
         </ul>
     </nav>
@@ -56,36 +55,65 @@
     <div id="main">
         <div class="inner">
             <header id="inner">
-                <h1>Added Cars</h1>
-                <p>These are all your added cars.</p>
+                <h1>My Upcoming Bookings</h1>
             </header>
-
-            <div>
-                <a href="/addCar" style="background-color: #585858; color: white; font-weight: bold; padding: 0.5em 0.5em;" > Add Car </a>
-            </div>
-
             <table class="styled-table">
                 <thead>
                 <tr>
+                    <th>User Name</th>
                     <th>Company</th>
                     <th>Name</th>
                     <th>Year</th>
+                    <th>Date(YYYY-MM-DD)</th>
                     <th>Price</th>
-                    <th>Post ad</th>
+                    <th>View</th>
                 </tr>
                 </thead>
                 <tbody>
-                    <c:forEach items="${requestScope.userCars}" var="car">
-                        <tr>
-                            <td>${car['company']}</td>
-                            <td>${car['name']}</td>
-                            <td>${car['year']}</td>
-                            <td>${car['price']}</td>
-                            <td>
-                                <a href="/postAd?carId=${car['carId']}" style="background-color: #585858; color: white; padding: 0.5em 0.5em;" > Post Ad </a>
-                            </td>
-                        </tr>
-                    </c:forEach>
+                <c:forEach items="${requestScope.myUpcomingBookings}" var="postingObj">
+                    <tr>
+                        <td>${postingObj.user['firstName']} ${postingObj.user['lastName']}</td>
+                        <td>${postingObj.car['company']}</td>
+                        <td>${postingObj.car['name']}</td>
+                        <td>${postingObj.car['year']}</td>
+                        <td>${postingObj.carPosting['postingDate']}</td>
+                        <td>$${postingObj.carPosting['price']}</td>
+                        <td>
+                            <a href="/viewMyBooking?carPostingId=${postingObj.carPosting['carPostingId']}" style="background-color: #585858; color: white; padding: 0.5em 0.5em;" > View </a>
+                        </td>
+                    </tr>
+                </c:forEach>
+                </tbody>
+            </table>
+
+            <br>
+            <br>
+
+            <header id="inner2">
+                <h1>My Old Bookings</h1>
+            </header>
+            <table class="styled-table">
+                <thead>
+                <tr>
+                    <th>User Name</th>
+                    <th>Company</th>
+                    <th>Name</th>
+                    <th>Year</th>
+                    <th>Date(YYYY-MM-DD)</th>
+                    <th>Price</th>
+                </tr>
+                </thead>
+                <tbody>
+                <c:forEach items="${requestScope.myOldBookings}" var="postingObj">
+                    <tr>
+                        <td>${postingObj.user['firstName']} ${postingObj.user['lastName']}</td>
+                        <td>${postingObj.car['company']}</td>
+                        <td>${postingObj.car['name']}</td>
+                        <td>${postingObj.car['year']}</td>
+                        <td>${postingObj.carPosting['postingDate']}</td>
+                        <td>$${postingObj.carPosting['price']}</td>
+                    </tr>
+                </c:forEach>
                 </tbody>
             </table>
         </div>
@@ -113,4 +141,7 @@
 
 </body>
 </html>
+
+
+
 

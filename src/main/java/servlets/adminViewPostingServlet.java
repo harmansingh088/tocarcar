@@ -4,6 +4,8 @@ import models.Car;
 import models.CarPosting;
 import models.CarPostingWrapper;
 import models.User;
+import services.CarPhotosProvider;
+import services.CarPostingWrapperProvider;
 import services.DatabaseConnection;
 
 import javax.servlet.ServletException;
@@ -22,7 +24,34 @@ import java.util.List;
 
 @WebServlet(name = "adminViewPostingServlet", urlPatterns = "/adminViewPosting")
 public class adminViewPostingServlet extends HttpServlet {
+    static int carPostingId;
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        if(request.getParameter("Reject") != null){
+            System.out.println("Rejected");
+            setStatus("Rejected");
+        }
+        else if(request.getParameter("Approve") != null){
+            System.out.println("Approved");
+            setStatus("Approved");
+        }
+        response.sendRedirect("/adminNewPostings");
+    }
+
+    static void setStatus(String status){
+        Connection conn = DatabaseConnection.getDatabaseConnection();
+        String query = " update carPosting " +
+                "set status = ? " +
+                "where carPostingId = ?";
+
+        try{
+            PreparedStatement preparedStmt = conn.prepareStatement(query);
+            preparedStmt.setString(1, status);
+            preparedStmt.setInt (2, carPostingId);
+            preparedStmt.executeUpdate();
+        }
+        catch(Exception e){
+            System.out.println(e.getLocalizedMessage());
+        }
 
     }
 
@@ -36,7 +65,6 @@ public class adminViewPostingServlet extends HttpServlet {
         if(useridString == null || !userType.equalsIgnoreCase("Admin")){
             getServletContext().getRequestDispatcher("/").forward(request, response);
         }
-        int carPostingId;
         try{
             carPostingId = Integer.valueOf(request.getParameter("carPostingId"));
             Connection conn = DatabaseConnection.getDatabaseConnection();
@@ -56,77 +84,16 @@ public class adminViewPostingServlet extends HttpServlet {
 
             List<String> imageBase64StringList;
             if (rs.next()) {
-                CarPosting carPosting = new CarPosting(
-                        rs.getDate("cp.postingDate"),
-                        rs.getString("cp.description"),
-                        rs.getDouble("cp.price"),
-                        rs.getInt("cp.carId"),
-                        rs.getInt("cp.ownerId"),
-                        rs.getString("cp.status")
-                );
-                carPosting.setCarId(rs.getInt("cp.carId"));
-
-                System.out.println("Car Posting Date: " + carPosting.getPostingDate());
-
-                Car newCar = new Car(
-                        rs.getString("c.company"),
-                        rs.getString("c.name"),
-                        rs.getString("c.colour"),
-                        rs.getInt("c.year"),
-                        rs.getString("c.description"),
-                        rs.getDouble("c.price"),
-                        rs.getInt("c.userId"));
-                newCar.setCarId(rs.getInt("c.carId"));
-
-                System.out.println("Car name: " + newCar.getName());
-
-                User user = new User(
-                        rs.getString("u.firstName"),
-                        rs.getString("u.lastName"),
-                        rs.getString("u.email"),
-                        "",
-                        rs.getString("u.userType"),
-                        rs.getString("u.phoneNumber"),
-                        rs.getInt("u.age")
-                );
-
-                System.out.println("User name: " + user.getFirstName());
+                CarPostingWrapper carPostingWrapperObj = CarPostingWrapperProvider.getCarPostingWrapperObj(rs);
 
                 String queryPhotos = " select * from carPhoto where carId = ?";
 
                 PreparedStatement preparedStmtPhotos = conn.prepareStatement(queryPhotos);
-                preparedStmtPhotos.setInt(1, newCar.getCarId());
+                preparedStmtPhotos.setInt(1, rs.getInt("cp.carId"));
 
-                imageBase64StringList = new ArrayList<String>();
                 ResultSet rsPhotos = preparedStmtPhotos.executeQuery();
-                while(rsPhotos.next()){
-                    Blob blob = rsPhotos.getBlob("photo");
+                imageBase64StringList = CarPhotosProvider.getCarPhotos(rsPhotos);
 
-                    InputStream inputStream = blob.getBinaryStream();
-                    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-                    byte[] buffer = new byte[4096];
-                    int bytesRead = -1;
-
-                    while ((bytesRead = inputStream.read(buffer)) != -1) {
-                        outputStream.write(buffer, 0, bytesRead);
-                    }
-
-                    byte[] imageBytes = outputStream.toByteArray();
-
-                    String base64Image = Base64.getEncoder().encodeToString(imageBytes);
-
-                    imageBase64StringList.add(base64Image);
-
-                    System.out.println("Photo: "+ base64Image);
-
-                    inputStream.close();
-                    outputStream.close();
-                }
-
-                CarPostingWrapper carPostingWrapperObj = new CarPostingWrapper();
-                carPostingWrapperObj.setCarPosting(carPosting);
-                carPostingWrapperObj.setCar(newCar);
-                carPostingWrapperObj.setUser(user);
                 carPostingWrapperObj.setCarPhotos(imageBase64StringList);
 
                 request.setAttribute("carPostingWrapperObj", carPostingWrapperObj);

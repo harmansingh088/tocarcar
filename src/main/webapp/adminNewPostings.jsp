@@ -58,6 +58,7 @@
             <table class="styled-table">
                 <thead>
                 <tr>
+                    <th>User Name</th>
                     <th>Company</th>
                     <th>Name</th>
                     <th>Year</th>
@@ -69,6 +70,7 @@
                 <tbody>
                 <c:forEach items="${requestScope.adminNewPostings}" var="postingObj">
                     <tr>
+                        <td>${postingObj.user['firstName']} ${postingObj.user['lastName']}</td>
                         <td>${postingObj.car['company']}</td>
                         <td>${postingObj.car['name']}</td>
                         <td>${postingObj.car['year']}</td>

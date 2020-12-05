@@ -2,14 +2,14 @@
   Created by IntelliJ IDEA.
   User: Harman.Malhotra
   Date: 12/4/2020
-  Time: 7:08 AM
+  Time: 2:26 PM
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <title>View Postings</title>
+    <title>New Postings</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="assets/css/main.css" />
@@ -42,9 +42,11 @@
     <nav id="menu">
         <h2>Menu</h2>
         <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="/adminAllUsers">All Users</a></li>
-            <li><a href="/adminNewPostings" class="active">New Postings</a></li>
+            <li><a href="/" >Home</a></li>
+            <li><a href="/myCars">My Cars</a></li>
+            <li><a href="/myPostings">My Postings</a></li>
+            <li><a href="/viewPostings" class="active">Rent Car</a></li>
+            <li><a href="/myBookings">My Bookings</a></li>
             <li><a href="/logout">Logout</a></li>
         </ul>
     </nav>
@@ -53,28 +55,36 @@
     <div id="main">
         <div class="inner">
             <header id="inner">
-                <h1>Review ad</h1>
-                <p>Here you can approve/reject the customer's ad.</p>
+                <h1>Select a car to book</h1>
             </header>
-
-            <section>
-                <h3><c:out value="${requestScope.carPostingWrapperObj.car['company']}"/> <c:out value="${requestScope.carPostingWrapperObj.car['name']}"/></h3>
-                <h3>Year <c:out value="${requestScope.carPostingWrapperObj.car['year']}" /></h3>
-                <c:forEach items="${requestScope.carPostingWrapperObj.carPhotos}" var="carPhoto">
-                    <img src="data:image/jpg;base64,${carPhoto}" width="240" height="300"/>
+            <table class="styled-table">
+                <thead>
+                <tr>
+                    <th>User Name</th>
+                    <th>Company</th>
+                    <th>Name</th>
+                    <th>Year</th>
+                    <th>Date(YYYY-MM-DD)</th>
+                    <th>Price</th>
+                    <th>Book</th>
+                </tr>
+                </thead>
+                <tbody>
+                <c:forEach items="${requestScope.approvedPostings}" var="postingObj">
+                    <tr>
+                        <td>${postingObj.user['firstName']} ${postingObj.user['lastName']}</td>
+                        <td>${postingObj.car['company']}</td>
+                        <td>${postingObj.car['name']}</td>
+                        <td>${postingObj.car['year']}</td>
+                        <td>${postingObj.carPosting['postingDate']}</td>
+                        <td>$${postingObj.carPosting['price']}</td>
+                        <td>
+                            <a href="/rentCar?carPostingId=${postingObj.carPosting['carPostingId']}" style="background-color: #585858; color: white; padding: 0.5em 0.5em;" > Book </a>
+                        </td>
+                    </tr>
                 </c:forEach>
-                <p><c:out value="${requestScope.carPostingWrapperObj.carPosting['description']}" /></p>
-                <h3>Date <c:out value="${requestScope.carPostingWrapperObj.carPosting['postingDate']}" /></h3>
-                <h3>Price $<c:out value="${requestScope.carPostingWrapperObj.carPosting['price']}" /></h3>
-
-
-                <form method="POST" action="/adminViewPosting" >
-                    <input type="submit" value="Cancel" name="Cancel" class="primary"/>
-                    <input type="submit" value="Reject" name="Reject" class="primary" style="background-color: #E44236;"/>
-                    <input type="submit" value="Approve" name="Approve" class="primary" style="background-color: #2ecc72;"/>
-                </form>
-            </section>
-
+                </tbody>
+            </table>
         </div>
     </div>
 
@@ -100,3 +110,6 @@
 
 </body>
 </html>
+
+
+
