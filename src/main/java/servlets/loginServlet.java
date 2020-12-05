@@ -70,7 +70,7 @@ public class loginServlet extends HttpServlet {
             if(loggedInUser.getUserType().equalsIgnoreCase("Admin"))
                 response.sendRedirect("/adminNewPostings");
             else{
-                response.sendRedirect("/myCars");
+                response.sendRedirect("/myCars?fromLogin=true");
             }
         }
         else{

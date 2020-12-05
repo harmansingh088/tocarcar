@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
-  User: harman
-  Date: 2020-11-29
-  Time: 7:23 p.m.
+  User: Dell
+  Date: 2020-12-05
+  Time: 7:27 a.m.
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -42,12 +42,14 @@
     <nav id="menu">
         <h2>Menu</h2>
         <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="/myCars">My Cars</a></li>
-            <li><a href="/myPostings">My Postings</a></li>
-            <li><a href="/viewPostings" class="active">Rent Car</a></li>
-            <li><a href="/myBookings">My Bookings</a></li>
-            <li><a href="/logout">Logout</a></li>
+            <ul>
+                <li><a href="/" >Home</a></li>
+                <li><a href="/myCars">My Cars</a></li>
+                <li><a href="/myPostings">My Postings</a></li>
+                <li><a href="/viewPostings">Rent Car</a></li>
+                <li><a href="/myBookings" class="active">My Bookings</a></li>
+                <li><a href="/logout">Logout</a></li>
+            </ul>
         </ul>
     </nav>
 
@@ -55,7 +57,7 @@
     <div id="main">
         <div class="inner">
             <header id="inner">
-                <h1>Review Car to book</h1>
+                <h1>Your Booking</h1>
             </header>
 
             <section>
@@ -69,9 +71,9 @@
                 <h3>Price $<c:out value="${requestScope.carPostingWrapperObj.carPosting['price']}" /></h3>
 
 
-                <form method="POST" action="/rentCar" >
-                    <input type="submit" value="Go Back" name="Cancel" class="primary" style="background-color: #EEC213"/>
-                    <input type="submit" value="Book" name="Book" class="primary" style="background-color: #3498DB;"/>
+                <form method="POST" action="/viewMyBooking" >
+                    <input type="submit" value="Go Back" name="Back" class="primary" style="background-color: #EEC213;"/>
+                    <input type="submit" value="Cancel Booking" name="Cancel" class="primary" style="background-color: #3498DB;"/>
                 </form>
             </section>
 

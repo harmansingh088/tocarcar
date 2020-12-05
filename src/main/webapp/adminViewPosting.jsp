@@ -61,7 +61,7 @@
                 <h3><c:out value="${requestScope.carPostingWrapperObj.car['company']}"/> <c:out value="${requestScope.carPostingWrapperObj.car['name']}"/></h3>
                 <h3>Year <c:out value="${requestScope.carPostingWrapperObj.car['year']}" /></h3>
                 <c:forEach items="${requestScope.carPostingWrapperObj.carPhotos}" var="carPhoto">
-                    <img src="data:image/jpg;base64,${carPhoto}" width="240" height="300"/>
+                    <img src="data:image/jpg;base64,${carPhoto}" width="250" height="250"/>
                 </c:forEach>
                 <p><c:out value="${requestScope.carPostingWrapperObj.carPosting['description']}" /></p>
                 <h3>Date <c:out value="${requestScope.carPostingWrapperObj.carPosting['postingDate']}" /></h3>

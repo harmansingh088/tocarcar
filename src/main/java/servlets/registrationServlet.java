@@ -62,7 +62,8 @@ public class registrationServlet extends HttpServlet {
                         HttpSession sessionNew = request.getSession();
                         sessionNew.setAttribute("loggedInUserId", newUser.getUserId());
                         sessionNew.setAttribute("loggedInUserType", newUser.getUserType());
-                        response.sendRedirect("/myCars");
+                        sessionNew.setAttribute("loggedInUserName", newUser.getFirstName() + " " + newUser.getLastName());
+                        response.sendRedirect("/myCars?fromRegistration=true");
                     }
                 }
                 catch(Exception e){

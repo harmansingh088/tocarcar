@@ -14,8 +14,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="assets/css/main.css" />
     <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+    <link rel="stylesheet" href="assets/css/snackbar.css" />
 </head>
-<body class="is-preload">
+<body class="is-preload" onload="afterPageLoad()">
 <!-- Wrapper -->
 <div id="wrapper">
 
@@ -50,6 +51,8 @@
             <li><a href="/logout">Logout</a></li>
         </ul>
     </nav>
+
+    <div id="snackbar">Some text some message..</div>
 
     <!-- Main -->
     <div id="main">
@@ -138,7 +141,34 @@
 <script src="assets/js/breakpoints.min.js"></script>
 <script src="assets/js/util.js"></script>
 <script src="assets/js/main.js"></script>
+<script>
+    function afterPageLoad(){
+        var url_string = window.location.href;
+        var url = new URL(url_string);
 
+        var afterCarBook = url.searchParams.get("afterCarBook");
+        var afterCancelBooking = url.searchParams.get("afterCancelBooking");
+
+        if(afterCarBook){
+            showSnackbar("Congrats, You have successfully booked the car!", "#2ecc72")
+        }
+
+        else if(afterCancelBooking){
+            showSnackbar("You have successfully cancelled the booking!", "#EEC213")
+        }
+
+    }
+
+    function showSnackbar(message, colour){
+        let snackbar = document.getElementById("snackbar");
+        snackbar.innerText = message;
+        snackbar.style.backgroundColor = colour
+        snackbar.className = "show";
+        setTimeout(function(){
+            snackbar.className = snackbar.className.replace("show", "");
+        }, 3000);
+    }
+</script>
 </body>
 </html>
 
