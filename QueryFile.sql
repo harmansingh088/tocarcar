@@ -11,8 +11,7 @@ CREATE TABLE users (
                        userType VARCHAR(10) NOT NULL,
                        phoneNumber VARCHAR(100) NOT NULL,
                        age INTEGER NOT NULL,
-                       PRIMARY KEY (userId),
-                       CONSTRAINT checkUserType CHECK (userType="admin" OR userType='customer')
+                       PRIMARY KEY (userId)
 );
 
 insert into users (firstName, lastName, email, password, userType, phoneNumber, age)
